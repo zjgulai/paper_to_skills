@@ -154,6 +154,93 @@ STRICT_ECOMMERCE_DOMAINS = {"14-用户分析", "04-供应链"}
 
 
 # ---------------------------------------------------------------------------
+# 约束词的「类」—— 由**实测域精度**导出，不是手写声明（PHASE6 P2b）
+# ---------------------------------------------------------------------------
+# 上一批（P2）把显著性假设的两个机械形式都推翻了，留下的交接是：
+#
+#     「先把表拆开，再谈显著性；在表拆开之前，任何位置规则都会被泛词短路。」
+#
+# 那是**对的诊断**（`table` 在 5% 处就能救活主题短语埋在 80% 处的论文），
+# 但本批实测：**三个语法拆表判据全部失败**，逐条反例可复现 ——
+#   · 「收割查询里被引号括起的短语」⇒ `table`（09 查询三 `abs:"table" AND …`）、
+#     `agent` / `llm` / `tool` / `context`（16 的查询）**全都在引号里**；
+#   · 「顶层 OR 分支的短语」⇒ 16 的 `abs:"agent skills" OR abs:"skill library" AND abs:"LLM"`
+#     仍会把 `agent` 判成主题词；
+#   · 「含空格的复合词」⇒ `text-to-sql` **没有空格**（漏掉最关键的那个词），
+#     而 `supply chain` 有空格（误收）。
+# ⇒ **语法判据问的是「这个词长什么样」，而需要的是「命中它意味着什么」。**
+#
+# 成立的是**实测**判据：某约束词对某域是**主题类**，当且仅当它的**域精度 > 0.5** ——
+#
+#     域精度(d, w) = 「摘要或题名命中 w 的论文」里「query_groups 解析后含 d」的比例
+#
+# 直觉：主题短语的语义角色就是「命中它 ⇒ 这篇属于这个域」；泛词的命中只是弱提示。
+# 这不是同义反复 —— `table` 同样出自 09 自己的收割查询，精度却只有 **0.195**。
+#
+# ⚠️ **两个数、一个窗口，必须一起读**（全池普查 42 条逐条标注见
+# `data/constraint-salience-labels.json`）：
+#   · 污染召回 **18/26 → 26/26**（现行全部词的规则漏 8 条）；标出数 **68 → 42**；
+#   · 纯污染率 **26.5% → 61.9%**；42 条**全部已标注**（现行那 68 条里有 43 条未标注）。
+#   · 污染召回 100% 的窗口是 **[0.4, 0.5]**；>0.5 立刻掉到 65.4%。
+#     上界由 `e-commerce`(00)=**0.521** 与 `database`(09)=**0.524** 顶住（各只高 0.02）。
+#     ⇒ **窗口很窄，换池子必须重算**；域精度是**池子的性质**，不是词的性质。
+# ⇒ 0.5 是唯一有非任意理由的值（「命中该词比不命中更可能属于本域」= 多头占优线），
+#   同时是窗口内精度最高的一端。**其余阈值都是「碰巧能用」，本批不采纳。**
+#
+# ⚠️ 一条**实测有效但未采纳**的候选：词长 ≥7（36 条、召回仍 26/26、纯污染率 72.2%）。
+#   它把 `item`（05 唯一的类词）整类移除 —— 省掉 5 条真命中误报，代价是该域**全部召回归零**。
+#   「按字符串长度猜具体性」正是 #86/#104 那类代理指标，且它让读数好看，故**只登记不采纳**。
+#
+# ⚠️ 本节的产物**仍然不参与保留/丢弃**（`judge()` 一字未改）。理由与 P2 相同，再加一条：
+#   42 条里有 **10 条**逐条确认过的真命中 ⇒ 拿它丢数据 = 24% 的已知静默损失。
+#   它买到的是**分诊用的召回**（26/26 而非 18/26），不是判决权。
+TOPIC_CLASS_MIN_PRECISION = 0.5
+
+
+def domain_precision(items: list[dict]) -> dict:
+    """每个 (域, 约束词) 的**域精度**。只从池子与收割标签算，不读任何手写表。
+
+    返回 `{(domain, word): {"precision": float|None, "hits": int, "in_domain": int}}`。
+    `hits == 0`（该词在池子里从没出现）⇒ precision 为 None，**不是 0** ——
+    「没测到」与「测了是 0」是两件事（本仓库危险性排序 3 > 2 > 1 > 0）。
+    """
+    resolved = {}
+    for it in items:
+        resolved[_item_id(it)] = set(_domains.resolve_groups(it.get("query_groups") or [])["resolved"])
+    out: dict = {}
+    for dom, words in DOMAIN_CONSTRAINT.items():
+        for w in words:
+            hits = [k for k, (t, a, _m) in _blobs(items).items() if w in t or w in a]
+            in_dom = sum(1 for k in hits if dom in resolved.get(k, ()))
+            out[(dom, w)] = {
+                "precision": (in_dom / len(hits)) if hits else None,
+                "hits": len(hits), "in_domain": in_dom,
+            }
+    return out
+
+
+def _blobs(items: list[dict]) -> dict:
+    """`{id: (标题小写, 摘要小写, 元数据小写)}` —— 域精度与证据形态共用同一份切分。"""
+    return {_item_id(i): ((i.get("title") or "").lower(),
+                          (i.get("abstract") or "").lower(),
+                          ((i.get("comment") or "") + " . " + (i.get("journal_ref") or "")).lower())
+            for i in items}
+
+
+def topic_class_words(domain: str, prec: dict, min_precision: float | None = None) -> list[str]:
+    """该域的**主题类**约束词（精度 > 阈值的那些），按精度降序、同精度按词名。
+
+    ⚠️ 该域可能**一个都没有**（实测 `02-A_B实验` 就是：`online`/`platform`/`marketplace`/
+    `advertis`/`pricing`/`user` 全是泛词，最高 0.385）—— 那不是缺陷，是「该域的约束表
+    里没有能代表主题的词」。**必须报出来**（`no_class`），不许静默为空。
+    """
+    thr = TOPIC_CLASS_MIN_PRECISION if min_precision is None else min_precision
+    got = [(prec.get((domain, w), {}).get("precision") or 0.0, w)
+           for w in DOMAIN_CONSTRAINT.get(domain, [])]
+    return [w for p, w in sorted(got, key=lambda pw: (-pw[0], pw[1])) if p > thr]
+
+
+# ---------------------------------------------------------------------------
 # 约束词命中的「证据形态」—— PHASE6 P2
 # ---------------------------------------------------------------------------
 # 这一节**只记录，不判定**。它的存在理由是上一批登记的一条工单：
@@ -192,11 +279,20 @@ T_NONE = "NONE_MATCHED"              # 一个约束词都没命中（此时 judg
 ABSTRACT_TOPICAL_CUT = 0.5
 
 
-def constraint_evidence(item: dict, domain: str) -> dict:
-    """该 (论文, 域) 的约束词命中**证据**。只记录，不判定保留/丢弃。"""
+def constraint_evidence(item: dict, domain: str, class_words: list[str] | None = None) -> dict:
+    """该 (论文, 域) 的约束词命中**证据**。只记录，不判定保留/丢弃。
+
+    `class_words`（该域的**主题类**词，见 `topic_class_words()`）可选：
+      · 传了 ⇒ 追加类感知读数 `class_hits` / `class_first_frac` / `late_class`；
+      · 没传 ⇒ 这三个字段是 **None，不是 False** —— 「没提供类表 ⇒ 本条无从判定」
+        与「判定为不晚」是两件事（同 `NO_CONSTRAINT` 的纪律，也是 #23 的形态）。
+    **五态 tier 在任何情况下逐字节不变**（这是反向控制：新读数不许动老读数）。
+    """
     cons = DOMAIN_CONSTRAINT.get(domain, [])
     ev = {"domain": domain, "tier": T_NO_CONSTRAINT, "words": [],
-          "title_words": [], "abstract_words": [], "meta_words": [], "first_frac": None}
+          "title_words": [], "abstract_words": [], "meta_words": [], "first_frac": None,
+          "class_words": None, "class_hits": None, "class_first_frac": None,
+          "late_class": None}
     if not cons:
         return ev
     t = (item.get("title") or "").lower()
@@ -208,6 +304,7 @@ def constraint_evidence(item: dict, domain: str) -> dict:
     t_hits = [c for c in cons if c in t]
     if t_hits:
         ev.update(tier=T_SELF, words=t_hits, title_words=t_hits)
+        _add_class(ev, t, a, meta, class_words, title_hit=True)
         return ev
     a_hits = [c for c in cons if c in a]
     if a_hits:
@@ -215,13 +312,40 @@ def constraint_evidence(item: dict, domain: str) -> dict:
         frac = first / max(1, len(a))
         ev.update(tier=(T_TOPICAL if frac < ABSTRACT_TOPICAL_CUT else T_INCIDENTAL),
                   words=a_hits, abstract_words=a_hits, first_frac=round(frac, 4))
+        _add_class(ev, t, a, meta, class_words, title_hit=False)
         return ev
     m_hits = [c for c in cons if c in meta]
     if m_hits:
         ev.update(tier=T_META, words=m_hits, meta_words=m_hits)
+        _add_class(ev, t, a, meta, class_words, title_hit=False)
         return ev
     ev.update(tier=T_NONE)
+    _add_class(ev, t, a, meta, class_words, title_hit=False)
     return ev
+
+
+def _add_class(ev: dict, t: str, a: str, meta: str,
+               class_words: list[str] | None, title_hit: bool) -> None:
+    """把**类感知**读数写进 `ev`。它只加字段，**一个已有字段都不动**。
+
+    `late_class` 的定义（逐字与全池实测一致，42/42 已标注）：
+      ① 该对**没有**任何约束词命中题名（题名自证优先 —— 否则会与 SELF_EVIDENT 打架）；
+      ② 至少一个**类词**命中摘要；
+      ③ 所有类词命中里**最浅**的那个落在摘要后半（≥ 50%）。
+    ⚠️ 用「类词的最浅位置」而不是「全部词的最浅位置」正是本批的修复点：
+    后者会被泛词短路（`table` 在 5% 处救活主题埋在 80% 处的论文，实测 3 篇）。
+    """
+    if class_words is None:
+        return
+    ev["class_words"] = list(class_words)
+    a_hits = [c for c in class_words if c in a]
+    ev["class_hits"] = a_hits
+    if title_hit or not a_hits:
+        ev["late_class"] = False
+        return
+    frac = min(a.find(c) for c in a_hits) / max(1, len(a))
+    ev["class_first_frac"] = round(frac, 4)
+    ev["late_class"] = frac >= ABSTRACT_TOPICAL_CUT
 
 
 def _blob(item: dict) -> tuple[str, str]:
@@ -292,6 +416,9 @@ def filter_pool(items: list[dict]) -> dict:
         unresolved_ids（论文 id，可复核）/ no_groups_ids /
         tiers（约束词命中的**证据形态**计数）· incidental_ids（顺带提及的论文，
         可复核）· evidence（逐 (论文,域) 的证据，进 `--apply` 产物）
+        + P2b：class_table（逐域主题类词与实测精度，**每次现算**，不存盘）·
+        late_class_ids（类感知「主题词只在摘要后段」的保留对）·
+        no_class_ids（该域**没有**主题类词 ⇒ 这一类对它无从判定）
     """
     kept: list[dict] = []
     reasons: Counter = Counter()
@@ -300,9 +427,26 @@ def filter_pool(items: list[dict]) -> dict:
     unresolved_ids: list[str] = []
     no_groups_ids: list[str] = []
     tiers: Counter = Counter()
-    incidental_ids: list[str] = []
+    incidental_ids: list[dict] = []
     evidence: dict[str, list[dict]] = {}
+    late_class_ids: list[dict] = []
+    no_class_ids: list[str] = []
     judged = 0
+
+    #: ⚠️ 类表**每次现算**，绝不存盘：把精度写进文件就是把它冻成一个会腐烂的豁免
+    #: （#84 的形态）。代价是一次 O(域 × 词 × 池子) 的子串扫描，实测可忽略。
+    prec = domain_precision(items)
+    # ⚠️ 精度可以是 **None**（该词在池子里一次都没出现 ⇒ 「没测到」）。必须原样带出去、
+    # 由报告说「n/a」，**不许在这里 round()** —— 本批的 M12 变异实测就是靠这一条把一个
+    # 「阈值被改成负值就会崩」的脆弱点撞出来的：崩溃不是判红，它连「红在哪条判据上」
+    # 都答不出来（本仓库已在 `--mutate` 里登记过这种「只让门禁崩掉」的形态）。
+    class_table = {d: [{"word": w,
+                        "precision": (round(prec[(d, w)]["precision"], 4)
+                                      if prec[(d, w)]["precision"] is not None else None),
+                        "hits": prec[(d, w)]["hits"]}
+                       for w in topic_class_words(d, prec)]
+                   for d in DOMAIN_CONSTRAINT}
+    class_cache: dict[str, list[str]] = {}
 
     for it in items:
         groups = it.get("query_groups") or []
@@ -324,7 +468,12 @@ def filter_pool(items: list[dict]) -> dict:
         domains = r["resolved"]
         verdicts = [judge(it, d) for d in domains]
         # 证据**独立于判定**采集：只对真正把它留下来的那些域记。
-        evs = [constraint_evidence(it, d) for d, v in zip(domains, verdicts) if v[0]]
+        evs = []
+        for d, v in zip(domains, verdicts):
+            if not v[0]:
+                continue
+            evs.append(constraint_evidence(it, d, class_cache.setdefault(
+                d, class_table.get(d) and [x["word"] for x in class_table[d]] or [])))
         if any(v[0] for v in verdicts):
             kept.append(it)
             for d, v in zip(domains, verdicts):
@@ -333,7 +482,19 @@ def filter_pool(items: list[dict]) -> dict:
             for e in evs:
                 tiers[e["tier"]] += 1
                 if e["tier"] == T_INCIDENTAL:
-                    incidental_ids.append(_item_id(it))
+                    # ⚠️ 记 (论文, 域) **对**而不是只记 id：一篇论文可属多个域，
+                    # 只记 id 时「这一条是哪个域的形态」无法回答，与标注集对账时
+                    # 会把别的域的标注算进来（首版实测：68 条被数成「全部已标注」）。
+                    incidental_ids.append({"arxiv_id": _item_id(it), "domain": e["domain"]})
+                # ⚠️ 「该域没有主题类词」与「类词命中不晚」**分开计数** ——
+                # 02-A_B实验 实测一个类词都没有（全是泛词），把这批算进
+                # 「不晚」会让整域静默消失（本仓库危险性排序 3 > 2 > 1 > 0）。
+                if e["class_words"] == []:
+                    no_class_ids.append(_item_id(it))
+                if e["late_class"]:
+                    late_class_ids.append({"arxiv_id": _item_id(it), "domain": e["domain"],
+                                           "class_hits": e["class_hits"],
+                                           "first_frac": e["class_first_frac"]})
             if evs:
                 evidence[_item_id(it)] = evs
         else:
@@ -348,6 +509,8 @@ def filter_pool(items: list[dict]) -> dict:
         "unresolved": unresolved, "unresolved_ids": unresolved_ids,
         "no_groups_ids": no_groups_ids,
         "tiers": tiers, "incidental_ids": incidental_ids, "evidence": evidence,
+        "class_table": class_table, "late_class_ids": late_class_ids,
+        "no_class_ids": no_class_ids,
     }
 
 
@@ -607,6 +770,102 @@ def selftest() -> int:
         ok = False
         print(f"  ❌ 回归用例读不到：{exc} —— 「没东西可查」不等于「查过了没问题」")
 
+    print("\n=== 判据：主题类词表（实测域精度，P2b；**读数，不判定**）===")
+    # ① 三个**语法**拆表判据的反例必须被这条**实测**判据挡住：`table` 出自 09
+    #    **自己的**收割查询（`abs:"table" AND abs:"agent" AND abs:"reasoning"`），
+    #    语法上「在引号里、是收割词」，但实测精度只有 0.195 ⇒ **不许进类表**。
+    #    这条是「把表拆开」这件事的核心断言，也是 M11/M12 两个变异的目标。
+    prec = None
+    try:
+        pool_items = json.loads((DATA / "arxiv_candidates.json").read_text(encoding="utf-8"))["items"]
+        prec = domain_precision(pool_items)
+        c09 = topic_class_words("09-DataAgent-LLM", prec)
+        for w, want in (("text-to-sql", True), ("table", False), ("agent", False)):
+            got = w in c09
+            good = got == want
+            ok &= good
+            p = prec.get(("09-DataAgent-LLM", w), {}).get("precision")
+            print(f"  {'✅' if good else '❌'} 09 域类表{'必须' if want else '**不许**'}含 {w!r}"
+                  f"（实测域精度 {p}）→ {'在' if got else '不在'}")
+        good = bool(c09)
+        ok &= good
+        print(f"  {'✅' if good else '❌'} 09 域类表非空（空表会让整条读数静默变成 0）→ {c09}")
+        # ② 「该域没有类词」必须**被报出来**，不能静默为空：02-A_B实验 整表泛词，
+        #    实测最高精度仍不到阈值 —— 那不是「这个域很干净」，是「判据看不见」。
+        c02 = topic_class_words("02-A_B实验", prec)
+        best02 = max((prec[("02-A_B实验", w)]["precision"] or 0)
+                     for w in DOMAIN_CONSTRAINT["02-A_B实验"])
+        good = (c02 == []) and best02 < TOPIC_CLASS_MIN_PRECISION
+        ok &= good
+        print(f"  {'✅' if good else '❌'} 02 域整表泛词 ⇒ 类表为空（最高精度 {best02:.3f}）；"
+              f"它必须落进 `no_class`，不许被当成「不晚」")
+    except FileNotFoundError as exc:
+        ok = False
+        print(f"  ❌ 候选池读不到：{exc} —— 「没东西可查」不等于「查过了没问题」")
+
+    print("\n=== 判据：类感知位置规则 —— 被泛词救活的三篇真污染必须重新可见 ===")
+    # 这是 P2b 的**存在理由**。P2 实测：`Constrained Decoding for Diffusion LMs` /
+    # `TTHE` / `EvolveNet` 三篇的主题短语 `text-to-sql` 埋在摘要 75%/78%/82%，
+    # **却被同一个表里的泛词 `table`（5%/6%/31%）救回**，于是全词版规则漏掉它们。
+    # 三条都是真 id、真语料 —— 夹具证明不了「真语料上就是它们」。
+    c09 = topic_class_words("09-DataAgent-LLM", prec) if prec is not None else ["text-to-sql"]
+    try:
+        pool_items = json.loads((DATA / "arxiv_candidates.json").read_text(encoding="utf-8"))["items"]
+        by_id = {_item_id(i): i for i in pool_items}
+        for aid in ("2607.07026", "2607.08124", "2608.04968"):
+            it = by_id.get(aid)
+            if it is None:
+                ok = False
+                print(f"  ❌ 回归用例 {aid} 已不在候选池里 ⇒ 该用例失效，必须重挑")
+                continue
+            ev = constraint_evidence(it, "09-DataAgent-LLM", c09)
+            good = ev["late_class"] is True and ev["tier"] == T_TOPICAL
+            ok &= good
+            print(f"  {'✅' if good else '❌'} {aid}：全词版判 {ev['tier']}（泛词抢跑），"
+                  f"类感知 late_class={ev['late_class']} @{ev['class_first_frac']}"
+                  f"  {it['title'][:42]}")
+        early = by_id.get("2606.16878")
+        if early is None:
+            ok = False
+            print("  ❌ 反向控制用例 2606.16878 不在池子里 ⇒ 该用例失效")
+        else:
+            ev = constraint_evidence(early, "15-营销投放分析",
+                                     topic_class_words("15-营销投放分析", prec))
+            good = (ev["late_class"] is False
+                    and ev["class_first_frac"] is not None
+                    and ev["class_first_frac"] < ABSTRACT_TOPICAL_CUT)
+            ok &= good
+            print(f"  {'✅' if good else '❌'} 反向控制：类词命中在摘要**前半**的真命中"
+                  f"不许被标 late → late_class={ev['late_class']}"
+                  f" @{ev['class_first_frac']}  {early['title'][:38]}")
+    except FileNotFoundError as exc:
+        ok = False
+        print(f"  ❌ 回归用例读不到：{exc}")
+
+    print("\n=== 判据：类感知读数**不许**改变保留/丢弃（守卫，同「顺带提及」那条）===")
+    late = {"arxiv_id": "late1", "title": "A Study of Something Else Entirely",
+            "abstract": _filler + " we report on the text-to-sql benchmark",
+            "query_groups": ["09-DataAgent-LLM"]}
+    ev = constraint_evidence(late, "09-DataAgent-LLM", c09)
+    keep_late = judge(late, "09-DataAgent-LLM")[0]
+    good = ev["late_class"] is True and keep_late
+    ok &= good
+    print(f"  {'✅' if good else '❌'} 一条 `late_class=True` 的论文**必须仍被保留**"
+          f"（judge 不读类感知字段）→ late_class={ev['late_class']} keep={keep_late}")
+    # 反向控制：同形态但另犯规则的，照样要丢 —— 证明上面那条不是恒真。
+    late_bad = {**late, "abstract": _filler + " we report on the gui agent text-to-sql benchmark"}
+    keep_bad, why_bad = judge(late_bad, "09-DataAgent-LLM")
+    good = (not keep_bad) and "否定词" in why_bad
+    ok &= good
+    print(f"  {'✅' if good else '❌'} 反向控制：同形态但**另犯规则**的必须照样被丢 → "
+          f"keep={keep_bad} {why_bad}")
+    # ⚠️「没给类表」≠「判为不晚」：两者都返回 False 时，缺表会被读成干净。
+    ev_none = constraint_evidence(late, "09-DataAgent-LLM")
+    good = ev_none["late_class"] is None and ev_none["class_words"] is None
+    ok &= good
+    print(f"  {'✅' if good else '❌'} 不提供类表时 `late_class` 必须是 **None 而不是 False**"
+          f"（「问不到」≠「不晚」，同 NO_CONSTRAINT 的纪律）→ {ev_none['late_class']!r}")
+
     print("✅ 自检通过：负向词/约束词/三态判定均按预期生效" if ok
           else "❌ 自检失败：过滤逻辑与关键词库 v2 的约定不符")
     return 0 if ok else 1
@@ -707,6 +966,19 @@ MUTATIONS: list[tuple[str, str, str, str, str]] = [
         return False, "顺带提及"
     return True, "ok\"""",
      "必须仍被保留"),
+    # --- PHASE6 P2b：把表拆开 ---
+    ("M11 类感知位置退回**全部约束词**（= P2b 修掉的那个缺陷本身）⇒ "
+     "被泛词救活的 3 篇真污染必须重新消失 ⇒ 自检必须报",
+     "candidate_filter.py",
+     '    a_hits = [c for c in class_words if c in a]',
+     '    a_hits = [c for c in DOMAIN_CONSTRAINT.get(ev["domain"], []) if c in a]',
+     "泛词抢跑"),
+    ("M12 类表改用**语法**判据（词长 ≥5）⇒ 09 自己的收割词 `table` 会被当成主题词 ⇒ "
+     "自检必须报（这是本批逐条否决的三个语法判据之一）",
+     "candidate_filter.py",
+     "    return [w for p, w in sorted(got, key=lambda pw: (-pw[0], pw[1])) if p > thr]",
+     "    return [w for p, w in sorted(got, key=lambda pw: (-pw[0], pw[1])) if len(w) >= 5]",
+     "不许**含 'table'"),
 ]
 
 
@@ -800,6 +1072,12 @@ BASELINE = {
     "tiers": {"SELF_EVIDENT": 386, "TOPICAL_WINDOW": 258, "NO_CONSTRAINT": 96,
               "INCIDENTAL_MENTION": 68, "META_ONLY": 1},
     "incidental_items": 68,
+    #: P2b：**类感知**读数（同样不进判定）。`late_class_items` 是「主题类词只在
+    #: 摘要后段」的保留对；`no_class_items` 是**该域一个主题类词都没有**的保留对
+    #: —— 后者必须单独记，否则「7 个域判据看不见」会被读成「这 7 个域很干净」。
+    "late_class_items": 42,
+    "no_class_items": 367,
+    "class_domains": 8,
 }
 
 
@@ -981,6 +1259,10 @@ def check_labels(labels_path: Path | None = None, pool_path: Path | None = None)
 
     errs, warns = [], []
     tiers = Counter()
+    # P2b：类表在**这个池子**上现算（域精度是池子的性质）—— 逐条核对 `class_late`。
+    prec = domain_precision(items)
+    cls = {d: topic_class_words(d, prec) for d in DOMAIN_CONSTRAINT}
+    n_class_ok = 0
     for c in cases:
         aid, dom, word, lab = c.get("arxiv_id"), c.get("domain"), c.get("word"), c.get("label")
         tag = f"{aid}/{dom}/{word}"
@@ -1008,10 +1290,20 @@ def check_labels(labels_path: Path | None = None, pool_path: Path | None = None)
             errs.append(f"{tag}：{word!r} 已不在摘要里（标注集的前提不成立）")
         if word in blob_title:
             errs.append(f"{tag}：{word!r} 现在**命中标题**了 —— 它不再是「仅摘要」形态，该重标")
-        ev = constraint_evidence(it, dom)
+        ev = constraint_evidence(it, dom, cls[dom])
         tiers[ev["tier"]] += 1
         if not judge(it, dom)[0]:
             errs.append(f"{tag}：它**当前被判丢**了 —— 标注集描述的是保留对")
+        # ⚠️ 类感知读数必须逐条对得上 —— 这一栏是 P2b 交付的**全部理由**
+        # （污染召回 18/26 → 26/26）。它漂了而没人知道，就等于交付了一个没人守的读数。
+        if not isinstance(c.get("class_late"), bool):
+            errs.append(f"{tag}：缺 `class_late`（布尔）—— 空壳条目等于没标注")
+        elif c["class_late"] != ev["late_class"]:
+            errs.append(f"{tag}：`class_late` 标注 {c['class_late']}，现算 {ev['late_class']}"
+                        f"（类词命中 {ev['class_hits']}，最浅 {ev['class_first_frac']}）"
+                        f" ⇒ 池子/词表变了，标注集必须重标")
+        else:
+            n_class_ok += 1
     got_counts = {k: sum(1 for c in cases if c.get("label") == k)
                   for k in ("POLLUTION", "BORDERLINE", "GENUINE")}
     if doc.get("counts") != got_counts:
@@ -1021,6 +1313,13 @@ def check_labels(labels_path: Path | None = None, pool_path: Path | None = None)
 
     print(f"校准集 {len(cases)} 条 · 命中形态 {dict(tiers)}")
     print(f"  标注：{got_counts}")
+    print(f"  其中 `class_late=True`（类感知标出的）"
+          f"**{sum(1 for c in cases if c.get('class_late') is True)}** 条"
+          f" · `class_late` 与现算相符 **{n_class_ok}/{len(cases)}**")
+    _poll = sum(1 for c in cases if c.get("label") == "POLLUTION")
+    _hit = sum(1 for c in cases if c.get("label") == "POLLUTION" and c.get("class_late"))
+    print(f"  污染召回（类感知）：**{_hit}/{_poll}**"
+          f"（全词版口径见 `--report` 的普查对照，数字现算不写死）")
     if warns:
         for w in warns:
             print(f"  ⚠️ {w}")
@@ -1069,6 +1368,10 @@ def check(pool_path: Path | None = None, out_path: Path | None = None,
         # ⚠️ 证据形态是**读数**，不进判定。放进来是为了让「形态分布变了」可见。
         "tiers": dict(sorted(r["tiers"].items())),
         "incidental_items": len(r["incidental_ids"]),
+        # ⚠️ 类感知读数（P2b）。与 tiers 同栏：**不进判定**，漂了只打 🟡。
+        "late_class_items": len(r["late_class_ids"]),
+        "no_class_items": len(r["no_class_ids"]),
+        "class_domains": sum(1 for ws in r["class_table"].values() if ws),
     }
     if out_path:
         out_path.write_text(json.dumps(reading, ensure_ascii=False, indent=1),
@@ -1101,6 +1404,12 @@ def check(pool_path: Path | None = None, out_path: Path | None = None,
           f"但**不据此丢弃**（判据未标定，理由见模块内编译期注释）。")
     print(f"  逐条名单：paper2skills-research/data/constraint-salience-labels.json")
     print(f"  （校准集；`--check-labels` 会在池子/词表变动后判红要求重标）")
+    _blind = sorted(d for d, ws in r["class_table"].items() if not ws)
+    print(f"\n类感知「主题词只在摘要后段」保留对 **{len(r['late_class_ids'])}** 条"
+          f"（全词版 {len(r['incidental_ids'])} 条）· 有主题类词的域 "
+          f"**{sum(1 for ws in r['class_table'].values() if ws)}/{len(r['class_table'])}**")
+    print(f"  ⚠️ 无主题类词的 {len(_blind)} 个域（{_blind}）上这一栏**无从判定**："
+          f"{len(r['no_class_ids'])} 个保留对落在那里 —— 「判据看不见」≠「干净」")
 
     if not compare_baseline:
         print(f"\n✅ 仪器瞎了 0（显式池子，**不对基线** —— 基线是这个冻结池子的性质）")
@@ -1130,6 +1439,12 @@ def check(pool_path: Path | None = None, out_path: Path | None = None,
     if len(r["incidental_ids"]) != baseline.get("incidental_items", -1):
         tier_errs.append(f"「顺带提及」保留对 {len(r['incidental_ids'])} "
                          f"≠ 基线 {baseline.get('incidental_items')}")
+    for key, cnt, name in (("late_class_items", len(r["late_class_ids"]), "类感知「主题词只在后段」"),
+                           ("no_class_items", len(r["no_class_ids"]), "该域无主题类词"),
+                           ("class_domains", sum(1 for ws in r["class_table"].values() if ws),
+                            "有主题类词的域数")):
+        if cnt != baseline.get(key, -1):
+            tier_errs.append(f"{name} {cnt} ≠ 基线 {baseline.get(key)}")
     if tier_errs:
         print("\n🟡 证据形态与基线不符（**判定未变** —— 这一栏不是判据，是读数）：")
         for e in tier_errs:
@@ -1149,6 +1464,172 @@ def check(pool_path: Path | None = None, out_path: Path | None = None,
     return 0
 
 
+def _report_census(n_late: int, n_all: int, r: dict) -> None:
+    """把两条规则在**全池普查标注集**上的读数并排打出来。**数字现算，不写死。**
+
+    ⚠️ 为什么必须是现算：这两个数正是本条交付的**全部理由**（召回与纯度）。
+    写死它们就等于「交付一个读数」，而本仓库已经四次栽在「交付 ≠ 接线」上
+    （台账 #11 / #23 / #71 / #78 / #105）。标注集读不到 ⇒ **说出来**，不假装。
+    """
+    lp = DATA / "constraint-salience-labels.json"
+    if not lp.is_file():
+        print(f"  ⚠️ 普查标注集读不到（{lp}）⇒ 召回/纯度**无从报出**"
+              f"（「没测到」不许当成「没问题」）")
+        return
+    lab = json.loads(lp.read_text(encoding="utf-8"))
+    cases = lab.get("cases") or []
+    by = {(c["arxiv_id"], c["domain"]): c for c in cases}
+    def tally(keys):
+        c = Counter(by[k]["label"] for k in keys if k in by)
+        return c, len([k for k in keys if k not in by])
+
+    # 全词版集合 = 五态里 INCIDENTAL 的那些 (论文,域)；类感知版 = late_class_ids。
+    inc_keys = {(x["arxiv_id"], x["domain"]) for x in r["incidental_ids"]}
+    late_keys = {(x["arxiv_id"], x["domain"]) for x in r["late_class_ids"]}
+    poll = sum(1 for c in cases if c["label"] == "POLLUTION")
+    a, a_un = tally(inc_keys)
+    b, b_un = tally(late_keys)
+    for tag, c, un, n in (("全词版（现行五态）", a, a_un, n_all),
+                          ("类感知版（本批）", b, b_un, n_late)):
+        print(f"  {tag}：标出 {n} 条 · 已标注 {n - un} 条 → 污染 {c['POLLUTION']} / "
+              f"边界 {c['BORDERLINE']} / 真命中 {c['GENUINE']} · 未标注 {un}")
+        if n:
+            print(f"      污染召回 {c['POLLUTION']}/{poll}（{c['POLLUTION']/poll:.0%}） · "
+                  f"纯污染率 {c['POLLUTION']/n:.1%}")
+    print(f"  逐条 id / 上下文 / 理由：paper2skills-research/data/constraint-salience-labels.json")
+    print(f"  ⚠️ 类感知版**覆盖率有限**：只有 {len([d for d in r['class_table'] if r['class_table'][d]])}"
+          f"/{len(r['class_table'])} 个域有主题类词 ⇒ 它的「标出 0 条」不等于该域干净。")
+
+
+def check_class(pool_path: Path | None = None, baseline: dict | None = None,
+                compare_baseline: bool = True) -> int:
+    """**类表与类感知读数**的独立核对（验收面 L19d）。
+
+    退出码 **0 全过 / 1 判红 / 2 输入没拿到 / 3 内部错误**。
+
+    为什么它自成一条门禁（而不是并进 `--check`）：`--check` 只回答「读数等于基线吗」，
+    而基线是**我写下的数**。类表却是**每次现跑算出来的**，于是有一类假话它看不见 ——
+    「把表冻成一个手写常量，值还刚好对得上」。#84（过期豁免腐烂）正是从这儿进来。
+    本条的机械形式是四条，**每条都能失败**：
+
+      J1 **独立复算**：用一份不复用 `domain_precision()` / `topic_class_words()` 的
+         暴力实现重算整张类表，逐词比对 —— 手写表、陈旧表、错阈值都在这条上现形。
+      J2 **盲区是一等输出**：类表为空的域名单与落在盲区的保留对必须**被报出来**；
+         若**所有**域都为空（整条读数瞎了）⇒ 判红。「看不见」不许伪装成「干净」。
+      J3 **结构性守卫**：`judge()` 的函数体里不许出现任何类感知字段名（AST 判定）。
+         这不是重复 M10 —— M10 守**行为**（一条样本仍被保留），J3 守**源码**：
+         下一个人把 `late_class` 写进别的分支时，行为用例未必挑得出来。
+      J4 类感知计数与基线相等（仅默认池子 —— 基线是这个冻结池子的性质）。
+    """
+    baseline = baseline if baseline is not None else BASELINE
+    pool_path = pool_path or DATA / "arxiv_candidates.json"
+    if not pool_path.is_file():
+        print(f"🔴 候选池读不到：{pool_path} —— 「没东西可查」不等于「查过了没问题」")
+        return 2
+    src = json.loads(pool_path.read_text(encoding="utf-8"))
+    items = src.get("items", src if isinstance(src, list) else [])
+    if not items:
+        print("🔴 候选池为空 —— exit 2")
+        return 2
+    try:
+        r = filter_pool(items)
+    except Exception as exc:                                   # noqa: BLE001
+        print(f"🔴 门禁内部错误（filter_pool 抛异常）：{exc!r}")
+        return 3
+
+    errs = []
+
+    # --- J1 独立复算 -----------------------------------------------------------
+    # ⚠️ 刻意**不 import、不调用** `domain_precision()` / `topic_class_words()`：
+    # 复用被检对象等于让被判者给自己出卷。这里用最笨的循环重算一遍。
+    brute: dict = {}
+    for dom, words in DOMAIN_CONSTRAINT.items():
+        rows = []
+        for w in words:
+            hits = [it for it in items
+                    if w in ((it.get("title") or "") + " " + (it.get("abstract") or "")).lower()]
+            in_dom = sum(1 for it in hits
+                         if dom in _domains.resolve_groups(
+                             it.get("query_groups") or [])["resolved"])
+            rows.append(((in_dom / len(hits)) if hits else None, w))
+        brute[dom] = [w for p, w in sorted(rows, key=lambda pw: (-(pw[0] or 0.0), pw[1]))
+                      if (p or 0.0) > TOPIC_CLASS_MIN_PRECISION]
+    for dom in DOMAIN_CONSTRAINT:
+        got = [x["word"] for x in r["class_table"].get(dom, [])]
+        if got != brute[dom]:
+            errs.append(f"J1 {dom} 类表与独立复算不符：现算 {got} · 暴力复算 {brute[dom]}")
+    print(f"J1 类表独立复算：{len(DOMAIN_CONSTRAINT)} 个域逐域比对 → "
+          f"{'**不一致**' if any(e.startswith('J1') for e in errs) else '一致'}")
+
+    # --- J2 盲区必须被报出来 ---------------------------------------------------
+    blind = sorted(d for d, ws in r["class_table"].items() if not ws)
+    n_no_class = len(r["no_class_ids"])
+    print(f"J2 盲区：**{len(blind)}/{len(DOMAIN_CONSTRAINT)} 个域没有主题类词** → {blind}")
+    print(f"   落在盲区里的保留对 **{n_no_class}** 条 —— 「判据看不见」≠「这些论文干净」")
+    if len(blind) == len(DOMAIN_CONSTRAINT):
+        errs.append("J2 **全部域都没有主题类词** ⇒ 类表整条是空的：这一定是判据瞎了"
+                    "（阈值被改错、或 precision 恒为 None），不是「所有域都很干净」")
+
+    # --- J3 结构性守卫：新读数不许进判定 ---------------------------------------
+    import ast
+    tree = ast.parse(Path(__file__).read_text(encoding="utf-8"))
+    fn = next((n for n in ast.walk(tree)
+               if isinstance(n, ast.FunctionDef) and n.name == "judge"), None)
+    names = {"late_class", "class_words", "class_hits", "class_first_frac", "class_table"}
+    used: list[str] = []
+    if fn is None:
+        errs.append("J3 找不到 `judge()` —— 门禁的判据锚点没了（改了函数名？）")
+    else:
+        # ⚠️ **三种写法都要认**：标识符（`late_class`）、属性（`ev.late_class`）、
+        # 以及**字符串字面量**（`ev["late_class"]`）。首版只查前两种，于是
+        # `constraint_evidence(item, domain)["late_class"]` 这种最自然的写法**溜过去了**
+        # —— 负向控制实测 exit 0（假绿）。这正是 #2/#11/#14/#93/#107 那一族
+        # 「判据只认一种写法」，只是这次写错的是本批新写的判据自己。
+        doc = (fn.body[0].value if fn.body and isinstance(fn.body[0], ast.Expr)
+               and isinstance(fn.body[0].value, ast.Constant) else None)
+        for n in ast.walk(fn):
+            if isinstance(n, ast.Name) and n.id in names:
+                used.append(n.id)
+            elif isinstance(n, ast.Attribute) and n.attr in names:
+                used.append(n.attr)
+            elif isinstance(n, ast.Constant) and n is not doc \
+                    and isinstance(n.value, str) and n.value in names:
+                used.append(n.value)
+            elif isinstance(n, ast.Constant) and n is not doc \
+                    and isinstance(n.value, str) \
+                    and any(f"\"{k}\"" in n.value or f"'{k}'" in n.value for k in names):
+                used.append(n.value)
+        used = sorted(set(used))
+        if used:
+            errs.append(f"J3 `judge()` 源码里出现了类感知字段 {used} —— "
+                        f"**它只许是读数，不许进保留/丢弃**（见模块内编译期注释）")
+    print(f"J3 `judge()` 源码：{'**出现**了 ' + str(used) if used else '不含类感知字段'}"
+          f"（结构性「不许据此丢弃」）")
+
+    # --- J4 基线 ---------------------------------------------------------------
+    if compare_baseline:
+        for key, cnt, name in (("late_class_items", len(r["late_class_ids"]),
+                                "类感知「主题词只在后段」"),
+                               ("no_class_items", n_no_class, "该域无主题类词"),
+                               ("class_domains", sum(1 for ws in r["class_table"].values() if ws),
+                                "有主题类词的域数")):
+            if cnt != baseline.get(key, -1):
+                errs.append(f"J4 {name} {cnt} ≠ 基线 {baseline.get(key)}")
+    else:
+        print("J4 跳过基线比对（显式池子 —— 基线是这个冻结池子的性质）")
+
+    print(f"类感知「主题词只在后段」保留对 {len(r['late_class_ids'])} 条 · "
+          f"有主题类词的域 {sum(1 for ws in r['class_table'].values() if ws)}/"
+          f"{len(DOMAIN_CONSTRAINT)}")
+    if errs:
+        print(f"\n🔴 {len(errs)} 条不成立：")
+        for e in errs:
+            print(f"   - {e}")
+        return 1
+    print("✅ 类表可独立复算 · 盲区已报出 · `judge()` 不含类感知字段 · 计数等于基线")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="三段式检索过滤（关键词库 v2）")
     ap.add_argument("--pool", type=Path, default=DATA / "arxiv_candidates.json")
@@ -1160,6 +1641,8 @@ def main() -> int:
                     help="校准集必须仍描述着当前池子（池子/词表变动 ⇒ 判红要求重标）")
     ap.add_argument("--check-spec", action="store_true",
                     help="规格文档点名的接线点必须真实存在，接线状态必须与代码一致")
+    ap.add_argument("--check-class", action="store_true",
+                    help="主题类表可独立复算、盲区被报出、judge() 不含类感知字段")
     ap.add_argument("--spec", type=Path, default=SPEC_DOC)
     ap.add_argument("--labels", type=Path, default=DATA / "constraint-salience-labels.json")
     ap.add_argument("--selftest", action="store_true")
@@ -1175,6 +1658,15 @@ def main() -> int:
         return check_spec(args.spec)
     if args.check_labels:
         return check_labels(args.labels, args.pool)
+    if args.check_class:
+        # ⚠️ 与 `--check` 不同：这里**只看池子路径**，不看 `P2S_REPO`。
+        # 理由是基线属于「这个池子」，而 `P2S_REPO` 只是「另一个 checkout」的代理 ——
+        # 端到端夹具把 `P2S_REPO` 钉在本仓库上，J4 就会**静默跳过**，于是
+        # 「计数漂了」这条判据在负向控制里**测不到**（本批实测：漏成假绿）。
+        # 判据要能被测到，比判据的措辞更值钱。
+        default_pool = (DATA / "arxiv_candidates.json").resolve()
+        bl = BASELINE if Path(args.pool).resolve() == default_pool else None
+        return check_class(args.pool, baseline=bl, compare_baseline=bl is not None)
     if args.check:
         # ⚠️ 基线是**这个冻结池子**的性质，不是判据的性质。所以只在读默认池子时对基线；
         # 显式 `--pool <别的池子>` 时只判「仪器瞎了没有」（否则夹具上必然报「篇数不符」，
@@ -1224,10 +1716,29 @@ def main() -> int:
 
     print(f"\n约束词命中形态（**读数，不进判定**）：{dict(sorted(r['tiers'].items()))}")
     print(f"  「只在摘要后段命中」的保留对 {len(r['incidental_ids'])} 条；"
-          f"其中去重论文 {len(set(r['incidental_ids']))} 篇。"
+          f"其中去重论文 {len({x['arxiv_id'] for x in r['incidental_ids']})} 篇。"
           f"这一栏是上一批登记的『顺带提及』那一类 —— 现在看得见，但**不据此丢弃**。")
     if r["incidental_ids"]:
-        print(f"  前 10 条 id：{sorted(set(r['incidental_ids']))[:10]}")
+        print(f"  前 10 条 id：{sorted({x['arxiv_id'] for x in r['incidental_ids']})[:10]}")
+
+    # --- P2b：把上面的读数**收紧到主题类词**（同样不进判定） -------------------
+    n_late = len(r["late_class_ids"])
+    blind = sorted(d for d, ws in r["class_table"].items() if not ws)
+    print(f"\n主题类词（**实测域精度 > {TOPIC_CLASS_MIN_PRECISION}**，每次现算、不存盘）逐域清单：")
+    for d in _domains.CANONICAL:
+        ws = r["class_table"].get(d) or []
+        if ws:
+            print(f"  {d}： " + " · ".join(f"{x['word']}({x['precision']}，{x['hits']} 篇)"
+                                          for x in ws))
+    print(f"  ⚠️ **{len(blind)}/{len(r['class_table'])} 个域一个主题类词都没有**：{blind}")
+    print(f"     它们的约束表整表都是泛词（实测最高精度也不到 {TOPIC_CLASS_MIN_PRECISION}）")
+    print(f"     ⇒ 这些域上**类感知读数为空**（{len(r['no_class_ids'])} 个保留对落在这里）——")
+    print(f"       是「判据看不见」，**不是**「这些论文干净」。")
+    print(f"\n类感知「主题词只在摘要后段」保留对：**{n_late}** 条"
+          f"（同一栏的全词版是 {len(r['incidental_ids'])} 条）")
+    _report_census(n_late, len(r["incidental_ids"]), r)
+    print(f"  ⚠️ 它是**分诊清单**，**不是判决** —— `judge()` 一字未读这两个新字段，")
+    print(f"     且其中相当一部分是逐条确认过的真命中（读数见上）。")
 
     if args.apply:
         out = DATA / "arxiv_candidates_filtered.json"
@@ -1243,6 +1754,11 @@ def main() -> int:
              # 在文件里长得一模一样**（这正是本批要修的那个缺陷）。
              "constraint_evidence": r["evidence"],
              "incidental_ids": r["incidental_ids"],
+             # P2b：类感知分诊清单 + 逐域类表（**这份是快照**，权威算法在脚本里现算；
+             # 下游要用请重跑，别把这份快照当成词的性质 —— 它是**池子的性质**）。
+             "late_class_ids": r["late_class_ids"],
+             "no_class_ids": r["no_class_ids"],
+             "topic_class_table": r["class_table"],
              "items": kept},
             ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"\n→ {out}")

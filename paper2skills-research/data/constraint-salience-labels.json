@@ -1,6 +1,6 @@
 {
- "_what": "约束词命中的「显著性」标注集（PHASE6 P2）。**全体普查，不是抽样**：上一批新补进约束表的 7 个主题短语（text-to-sql / data analysis agent / autonomous data science / aspect-based sentiment / opinion mining / marketing mix / media mix）在 3 个域里**只在摘要命中**的全部 (论文,域) 对，共 28 条。",
- "_why": "上一批把「补 text-to-sql 会放进 4 篇顺带提及的论文」登记为代价，并假设「真命中与它们的区分点是标题 vs 摘要的显著性」。本批逐条读原文复核：**污染是 9 条不是 4 条**，且该假设的两个机械形式都被实测推翻。这份标注集是给下一个写规则的人用的**校准集**，也是本批唯一能拿出的真读数。",
+ "_what": "约束词命中的「显著性」标注集（PHASE6 P2 立，P2b 扩为**全池普查**）。P2 批标注的是上一批新补进约束表的 7 个主题短语在 3 个域里「只在摘要命中」的 28 个 (论文,域) 对（全体，非抽样）；P2b 批把**类感知位置规则标出的 42 条**全部逐条读原文标注（其中 32 条为新标，另 10 条沿用 P2 批），于是**标出的每一条都有标注、没有「未标注」残留**。逐条 id / 域 / 词 / 命中位置 / 逐字上下文 / 理由 / 置信度落在本文件。",
+ "_why": "P2 把「标题 vs 摘要的显著性」假设的两个机械形式都推翻了，并留下交接：**先拆表，再谈显著性**。P2b 检验了三个**语法**拆表判据（收割查询里被引号括起的短语 / 顶层 OR 位置 / 多词）——**全部失败**（`table`/`agent`/`llm`/`e-commerce` 同样在引号里、同样在 OR 位置）。成立的是**实测**判据：某约束词对某域的**域精度 > 0.5**（命中该词的论文里，本域在 `query_groups` 里的比例）。本标注集就是这条规则的标定物与守卫：`--check-labels` 逐条核对 `class_late` 是否仍与现算一致。",
  "_labels": {
   "POLLUTION": "主题在别处，本域短语只作为评测设置的一员或评测基准名出现",
   "BORDERLINE": "与 09 域相邻但本域短语不是研究对象；判真命中或污染都能说通",
@@ -8,7 +8,7 @@
  },
  "_reviewed_by": "主控逐条读 arXiv 摘要原文（上下文由脚本从池子逐字截取，非复述）",
  "_reviewed_at": "2026-09-14",
- "_expires_when": "候选池重新收割、或 7 个主题短语中任一条从约束表移除/改写时 —— 届时 `candidate_filter.py --check-labels` 会判红要求重标（防过期豁免腐烂）",
+ "_expires_when": "候选池重新收割、或任一约束词表被改动时 —— 届时 `candidate_filter.py --check-labels` 会判红要求重标（防过期豁免腐烂）。⚠️ 域精度是**池子的性质**，不是词的性质：换池子必须重算并重标。",
  "title_priority_regression": {
   "_why": "本批测量脚本首版按约束词表顺序「撞上第一个就 break」，于是这三篇**题目即主题**的论文只因先撞上表里的 `table` 就被标成「顺带提及」。修法是**把题名自证前置**。夹具能证明「顺序错了会红」，这三条真 id 证明「真语料上确实就是它们」。",
   "ids": [
@@ -19,9 +19,9 @@
   "must_be": "SELF_EVIDENT"
  },
  "counts": {
-  "BORDERLINE": 4,
-  "GENUINE": 15,
-  "POLLUTION": 9
+  "POLLUTION": 26,
+  "BORDERLINE": 10,
+  "GENUINE": 24
  },
  "cases": [
   {
@@ -33,7 +33,9 @@
    "first_frac": 0.0,
    "title_has_word": false,
    "context": "Text-to-SQL benchmarks ship schemas whose column names already say what the columns mean. Production ",
-   "why": "`text-to-SQL benchmarks ship schemas whose column names already say what the columns mean` —— 作为设定/对照被提及，主题是**列语义恢复**（数据管理，与 09 相邻）"
+   "why": "`text-to-SQL benchmarks ship schemas whose column names already say what the columns mean` —— 作为设定/对照被提及，主题是**列语义恢复**（数据管理，与 09 相邻）",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.15931",
@@ -44,7 +46,9 @@
    "first_frac": 0.22,
    "title_has_word": false,
    "context": "s. Existing LLM evaluations largely target general-purpose code generation or declarative text-to-SQL, leaving procedural database programming underexplored. PLSQLBench contains 2,865 instanc",
-   "why": "`largely target general-purpose code generation or declarative text-to-SQL, leaving procedural database programming underexplored` —— text-to-SQL 是对照项，但论文是**数据库程序化编程**基准，与 09 域相邻"
+   "why": "`largely target general-purpose code generation or declarative text-to-SQL, leaving procedural database programming underexplored` —— text-to-SQL 是对照项，但论文是**数据库程序化编程**基准，与 09 域相邻",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2609.00367",
@@ -55,7 +59,9 @@
    "first_frac": 0.1,
    "title_has_word": false,
    "context": "cated data engineering tasks such as generating structured queries from natural language, Text-to-SQL, and automating complex spreadsheet operations. However, maximizing their utility demands",
-   "why": "`data engineering tasks such as generating structured queries from natural language, text-to-SQL, and automating complex spreadsheet operations` —— 枚举，但论文主题是**数据工程的神经符号方法**，与 09 相邻"
+   "why": "`data engineering tasks such as generating structured queries from natural language, text-to-SQL, and automating complex spreadsheet operations` —— 枚举，但论文主题是**数据工程的神经符号方法**，与 09 相邻",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2609.07629",
@@ -66,7 +72,9 @@
    "first_frac": 0.246,
    "title_has_word": false,
    "context": "ies that frame the problem under their own conventions, such as table question answering, text-to-SQL, and data analysis agents, with works six times as likely to cite within the same task la",
-   "why": "`such as table question answering, text-to-SQL, and data analysis agents` 也是枚举，但论文本身就是**表格洞察抽取的立场/综述**，落在 09 域边缘"
+   "why": "`such as table question answering, text-to-SQL, and data analysis agents` 也是枚举，但论文本身就是**表格洞察抽取的立场/综述**，落在 09 域边缘",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.22443",
@@ -77,7 +85,9 @@
    "first_frac": 0.0,
    "title_has_word": false,
    "context": "Data analysis agents are becoming increasingly common tools for applied and scientific research. Yet, for hig",
-   "why": "`data analysis agents are becoming increasingly common tools for applied and scientific research` —— 首句即研究对象"
+   "why": "`data analysis agents are becoming increasingly common tools for applied and scientific research` —— 首句即研究对象",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.20056",
@@ -88,7 +98,9 @@
    "first_frac": 0.0,
    "title_has_word": false,
    "context": "Aspect-based sentiment analysis (ABSA) in Arabic must recover both explicitly stated aspects and implicit aspect",
-   "why": "`aspect-based sentiment analysis (ABSA) in Arabic must recover both explicitly stated aspects and implicit aspects` —— 首句即研究对象"
+   "why": "`aspect-based sentiment analysis (ABSA) in Arabic must recover both explicitly stated aspects and implicit aspects` —— 首句即研究对象",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.20831",
@@ -99,7 +111,9 @@
    "first_frac": 0.0,
    "title_has_word": false,
    "context": "Aspect-based sentiment analysis (ABSA) quadruple extraction requires jointly predicting target, aspect, opinion,",
-   "why": "`aspect-based sentiment analysis (ABSA) quadruple extraction requires ...` —— 首句即研究对象"
+   "why": "`aspect-based sentiment analysis (ABSA) quadruple extraction requires ...` —— 首句即研究对象",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.11207",
@@ -110,7 +124,9 @@
    "first_frac": 0.385,
    "title_has_word": false,
    "context": " to the difficulty of long text modeling and the limitation of input length for LLMs. The text-to-SQL approach is used to efficiently extract key information from tables and generate smaller ",
-   "why": "`the text-to-SQL approach is used to efficiently extract key information from tables` —— 把 text-to-SQL 当作方法本体使用"
+   "why": "`the text-to-SQL approach is used to efficiently extract key information from tables` —— 把 text-to-SQL 当作方法本体使用",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.13311",
@@ -121,7 +137,9 @@
    "first_frac": 0.275,
    "title_has_word": false,
    "context": "ext. We argue that this step warrants first-class evaluation. To this end, we recast five text-to-SQL datasets (Spider, BIRD, BEAVER, and two LiveSQLBench variants) as retrieval tasks at both",
-   "why": "`we recast five text-to-SQL datasets (Spider, BIRD, ...) as retrieval tasks` —— 研究对象是 text-to-SQL 的表/列检索环节"
+   "why": "`we recast five text-to-SQL datasets (Spider, BIRD, ...) as retrieval tasks` —— 研究对象是 text-to-SQL 的表/列检索环节",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.15901",
@@ -132,7 +150,9 @@
    "first_frac": 0.055,
    "title_has_word": false,
    "context": "Despite strong capabilities in data understanding and decision-making, autonomous data science agents still heavily rely on trial-and-error workflows that involve expensive computation",
-   "why": "`autonomous data science agents still heavily rely on trial-and-error workflows` —— 首段即研究对象"
+   "why": "`autonomous data science agents still heavily rely on trial-and-error workflows` —— 首段即研究对象",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.28033",
@@ -143,7 +163,9 @@
    "first_frac": 0.163,
    "title_has_word": false,
    "context": "management and processing. However, existing benchmarks predominantly focus on simplified Text-to-SQL translation or data analysis, leaving the critical and complex domain of end-to-end data ",
-   "why": "`predominantly focus on simplified text-to-SQL translation or data analysis, leaving ... end-to-end data engineering` —— 研究对象是数据工程智能体评测"
+   "why": "`predominantly focus on simplified text-to-SQL translation or data analysis, leaving ... end-to-end data engineering` —— 研究对象是数据工程智能体评测",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.03794",
@@ -154,7 +176,9 @@
    "first_frac": 0.194,
    "title_has_word": false,
    "context": "ators (DBAs). However, current evaluation benchmarks remain disproportionately fixated on Text-to-SQL tasks, neglecting the holistic Database Lifecycle-from initial schema design to post-depl",
-   "why": "`benchmarks remain disproportionately fixated on text-to-SQL tasks, neglecting the holistic database lifecycle` —— 研究对象是数据库全生命周期评测"
+   "why": "`benchmarks remain disproportionately fixated on text-to-SQL tasks, neglecting the holistic database lifecycle` —— 研究对象是数据库全生命周期评测",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.05906",
@@ -165,7 +189,9 @@
    "first_frac": 0.124,
    "title_has_word": false,
    "context": "over similar solutions. We study whether finalized repair outcomes can improve subsequent Text-to-SQL episodes without parameter updates. We introduce MERIT, a training-free agent that mainta",
-   "why": "`we study whether finalized repair outcomes can improve subsequent text-to-SQL episodes` —— 明确以 text-to-SQL 为研究对象"
+   "why": "`we study whether finalized repair outcomes can improve subsequent text-to-SQL episodes` —— 明确以 text-to-SQL 为研究对象",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.13926",
@@ -176,7 +202,9 @@
    "first_frac": 0.056,
    "title_has_word": false,
    "context": "models have made natural language interfaces to databases (NLIDB) newly credible, but LLM text-to-SQL systems fail in a way that matters for deployment: a hallucinated column or a mis-aggrega",
-   "why": "`LLM text-to-SQL systems fail in a way that matters for deployment` —— 研究对象即 NLIDB/text-to-SQL 的拒答"
+   "why": "`LLM text-to-SQL systems fail in a way that matters for deployment` —— 研究对象即 NLIDB/text-to-SQL 的拒答",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.15145",
@@ -187,7 +215,9 @@
    "first_frac": 0.043,
    "title_has_word": false,
    "context": "Large Language Models (LLMs) have been increasingly adopted in Text-to-SQL systems, yet SQL errors remain a major obstacle in real-world Text-to-SQL inference pipel",
-   "why": "`LLMs have been increasingly adopted in text-to-SQL systems, yet SQL errors remain a major obstacle` —— 研究对象即 text-to-SQL 纠错"
+   "why": "`LLMs have been increasingly adopted in text-to-SQL systems, yet SQL errors remain a major obstacle` —— 研究对象即 text-to-SQL 纠错",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.26157",
@@ -198,7 +228,9 @@
    "first_frac": 0.129,
    "title_has_word": false,
    "context": "s, invalid joins, wrong grain, unsafe data access, and unsupported explanations. Existing text-to-SQL systems often ground generation in database schemas or retrieved documentation, while ent",
-   "why": "`existing text-to-SQL systems often ground generation in database schemas ... GROUND is compared with direct schema-only text-to-SQL` —— 研究对象即 text-to-SQL 的落地与对照"
+   "why": "`existing text-to-SQL systems often ground generation in database schemas ... GROUND is compared with direct schema-only text-to-SQL` —— 研究对象即 text-to-SQL 的落地与对照",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2609.03898",
@@ -209,7 +241,9 @@
    "first_frac": 0.105,
    "title_has_word": false,
    "context": "uage (NL) interfaces to databases have been optimized for the wrong problem. The dominant Text-to-SQL paradigm assumes that users ask questions that can be answered by single SQL queries. In ",
-   "why": "`the dominant text-to-SQL paradigm assumes that users ask questions that can be answered by single SQL queries` —— 论文就在质疑这个范式本身"
+   "why": "`the dominant text-to-SQL paradigm assumes that users ask questions that can be answered by single SQL queries` —— 论文就在质疑这个范式本身",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2606.16878",
@@ -220,7 +254,9 @@
    "first_frac": 0.206,
    "title_has_word": false,
    "context": "el insights without relying on user-level tracking. However, the two dominant approaches, Marketing Mix Modeling (MMM) and Multi-Touch Attribution (MTA), often produce fragmented insights. MMM ",
-   "why": "`the two dominant approaches, marketing mix modeling (MMM) and multi-touch attribution (MTA)` —— 研究对象即 MMM 与 MTA 的整合"
+   "why": "`the two dominant approaches, marketing mix modeling (MMM) and multi-touch attribution (MTA)` —— 研究对象即 MMM 与 MTA 的整合",
+   "class_late": false,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2606.30992",
@@ -231,7 +267,9 @@
    "first_frac": 0.704,
    "title_has_word": false,
    "context": " based on marketing spend correlation to reduce collinearity, and to implement a Bayesian Marketing Mix Model with cluster-level data. Such clustering happens in two steps -- we first normalize",
-   "why": "`to implement a Bayesian marketing mix model with cluster-level data` —— 研究对象即 MMM（**摘要 70% 深处**，是本批深度规则唯一的假阳性）"
+   "why": "`to implement a Bayesian marketing mix model with cluster-level data` —— 研究对象即 MMM（**摘要 70% 深处**，是本批深度规则唯一的假阳性）",
+   "class_late": true,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.07026",
@@ -242,7 +280,9 @@
    "first_frac": 0.785,
    "title_has_word": false,
    "context": "ross various tasks including function calling (xLAM, BFCL), planning (Sudoku, Countdown), text-to-SQL (Spider), and math reasoning (GSM-Symbolic), with little inference overhead relative to u",
-   "why": "`tasks including function calling (xlam, bfcl), planning (sudoku, countdown), text-to-SQL (spider), and math reasoning` —— 四项评测任务之一，主题是扩散语言模型的约束解码"
+   "why": "`tasks including function calling (xlam, bfcl), planning (sudoku, countdown), text-to-SQL (spider), and math reasoning` —— 四项评测任务之一，主题是扩散语言模型的约束解码",
+   "class_late": true,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.08124",
@@ -253,7 +293,9 @@
    "first_frac": 0.747,
    "title_has_word": false,
    "context": "e frozen LLM, so all adaptation occurs through changes to the surrounding program. Across text-to-SQL, competitive programming, software engineering, data-science coding, and agentic tool-use",
-   "why": "`across text-to-SQL, competitive programming, software engineering, data-science coding, and agentic tool-use tasks` —— 五项任务枚举之首，主题是测试期 harness 演化"
+   "why": "`across text-to-SQL, competitive programming, software engineering, data-science coding, and agentic tool-use tasks` —— 五项任务枚举之首，主题是测试期 harness 演化",
+   "class_late": true,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.14506",
@@ -264,7 +306,9 @@
    "first_frac": 0.883,
    "title_has_word": false,
    "context": "four domains: mathematical problem-solving, programming, general-knowledge reasoning, and Text-to-SQL. Our bounds exceed the accuracy of the base model by 9-51% and lie within 6-11% of the ac",
-   "why": "`four domains: mathematical problem-solving, programming, general-knowledge reasoning, and Text-to-SQL` —— 四个评测域的最后一项，主题是 RLVR 泛化界"
+   "why": "`four domains: mathematical problem-solving, programming, general-knowledge reasoning, and Text-to-SQL` —— 四个评测域的最后一项，主题是 RLVR 泛化界",
+   "class_late": true,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2607.25243",
@@ -275,7 +319,9 @@
    "first_frac": 0.669,
    "title_has_word": false,
    "context": "esentation. The first evaluates natural-language-to-query translation beyond conventional text-to-SQL and text-to-Cypher benchmarks, including 3D spatial reasoning, provenance-aware filtering",
-   "why": "`beyond conventional text-to-SQL and text-to-Cypher benchmarks` —— 作为对照基准被提及，主题是 3D 城市知识图谱"
+   "why": "`beyond conventional text-to-SQL and text-to-Cypher benchmarks` —— 作为对照基准被提及，主题是 3D 城市知识图谱",
+   "class_late": true,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.00017",
@@ -286,7 +332,9 @@
    "first_frac": 0.882,
    "title_has_word": false,
    "context": "nswer-free de-inflation algorithm LUCID delivers a consistent end-to-end gain on the BIRD text-to-SQL benchmark. It raises execution accuracy to $56.9\\%$, above both a Memento-style self-grad",
-   "why": "`on the BIRD text-to-SQL benchmark` —— 唯一的评测基准名，主题是自改进 LLM 智能体的奖励膨胀"
+   "why": "`on the BIRD text-to-SQL benchmark` —— 唯一的评测基准名，主题是自改进 LLM 智能体的奖励膨胀",
+   "class_late": true,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.04968",
@@ -297,7 +345,9 @@
    "first_frac": 0.822,
    "title_has_word": false,
    "context": "ntroduces scope-typed, evidence-guided program aggregation. Across five settings spanning text-to-SQL, data-science coding, competitive programming, software engineering, and agentic workflow",
-   "why": "`across five settings spanning text-to-SQL, data-science coding, competitive programming, software engineering, and agentic workflows` —— 五项评测设置枚举之首，主题是 harness 演化"
+   "why": "`across five settings spanning text-to-SQL, data-science coding, competitive programming, software engineering, and agentic workflows` —— 五项评测设置枚举之首，主题是 harness 演化",
+   "class_late": true,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.08514",
@@ -308,7 +358,9 @@
    "first_frac": 0.503,
    "title_has_word": false,
    "context": "re-implement LCF's projector, contrastive, and intervention pipeline, then extend both to text-to-SQL, legal extraction, fallacy identification, and precedent grading, and probe LCF's represe",
-   "why": "`extend both to text-to-SQL, legal extraction, fallacy identification, and precedent grading` —— 四项枚举之一，主题是 LLM 推理可靠性复现"
+   "why": "`extend both to text-to-SQL, legal extraction, fallacy identification, and precedent grading` —— 四项枚举之一，主题是 LLM 推理可靠性复现",
+   "class_late": true,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.20918",
@@ -319,7 +371,9 @@
    "first_frac": 0.526,
    "title_has_word": false,
    "context": "s stay within training noise, with durability ranging from under one release interval for text-to-SQL to over fourteen months for intent classification. Direct adapter copying depends neither",
-   "why": "`durability ranging from under one release interval for text-to-SQL to over fourteen months for intent classification` —— 并列对比里的一个成员，主题是微调模型升级基准"
+   "why": "`durability ranging from under one release interval for text-to-SQL to over fourteen months for intent classification` —— 并列对比里的一个成员，主题是微调模型升级基准",
+   "class_late": true,
+   "_batch": "P2 原批"
   },
   {
    "arxiv_id": "2608.26730",
@@ -330,7 +384,436 @@
    "first_frac": 0.751,
    "title_has_word": false,
    "context": "and only observed events extend memory. On one 4B model adapted across finance reasoning, text-to-SQL, and function calling, candidate updates exhibit heterogeneous target and retention effec",
-   "why": "`across finance reasoning, text-to-SQL, and function calling` —— 只是在**列举评测域**，论文主题是 LLM 后训练经验迁移"
+   "why": "`across finance reasoning, text-to-SQL, and function calling` —— 只是在**列举评测域**，论文主题是 LLM 后训练经验迁移",
+   "class_late": true,
+   "_batch": "P2 原批"
+  },
+  {
+   "arxiv_id": "2608.11015",
+   "domain": "05-推荐系统",
+   "word": "item",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.5,
+   "title_has_word": false,
+   "context": "ate. neither sona nor its teacher ranker uses hand-engineered features; both operate on logged event fields and learned item representations. in the final sona configuration, the larger teacher supplies ranking targets during training but is ab",
+   "why": "Sona Technical Report：整篇是推荐排序器（logged event fields + learned item representations），item 是它的对象不是顺带",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.23434",
+   "domain": "04-供应链",
+   "word": "inventory",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.5003,
+   "title_has_word": false,
+   "context": " $o(t^{-1/2})$, improving to $o(\\log t/t)$ when poor decisions produce clearer profit losses. in a used-car case study, inventory replenishment is the long-term decision and customer-arrival pricing the short-term decision. relative to the strongest",
+   "why": "Two-Timescale HRL：used-car 案例里 inventory replenishment 就是长期决策本身，属 04",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.16255",
+   "domain": "12-ML基础",
+   "word": "tabular",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.5054,
+   "title_has_word": false,
+   "context": "l reasoning, and processing world knowledge. in this work, we utilize an llm for the problem of feature generation from tabular data based on the previously given features. we have created a pipeline that takes a set of attributes and a prompt to ",
+   "why": "Feature Generation Using LLMs：主题就是从 tabular data 生成特征，正落 12",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2608.10247",
+   "domain": "05-推荐系统",
+   "word": "item",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.5156,
+   "title_has_word": false,
+   "context": "f{m}) \\mathbf{r}_u$: a signed input signal $\\mathbf{r}_u^{\\pm}$ that encodes the user's explicit dislikes, and a signed item-item operator $\\mathbf{m}^{\\pm}$ that blends like-together and dislike-together similarity. the framework is backbone-a",
+   "why": "DualSpectralCF：协同过滤论文，主题即推荐",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.22877",
+   "domain": "00-电商Agent",
+   "word": "e-commerce",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.5351,
+   "title_has_word": false,
+   "context": "es user-consistent trajectories averaging 2.2m tokens and 1,772 grounded events per user across 16 applications such as e-commerce, fitness, and social platforms. the profile evolves over this period and is never given explicitly: each attribute, hab",
+   "why": "DynamicMem 长程记忆基准：e-commerce 只是 16 个应用之一",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2608.04341",
+   "domain": "00-电商Agent",
+   "word": "e-commerce",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.5601,
+   "title_has_word": false,
+   "context": "ce rather than refining the single seeded paradigm. we instantiate the framework on product-to-catalog matching (a core e-commerce retrieval task with a large, category-structured solution space), posed as selective prediction with a precision-covera",
+   "why": "LLM-Agent 搜解空间框架，实例化在 product-to-catalog matching（00 的目录富化），但框架本身是通用的",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.31804",
+   "domain": "12-ML基础",
+   "word": "tabular",
+   "label": "POLLUTION",
+   "confidence": "medium",
+   "first_frac": 0.6165,
+   "title_has_word": false,
+   "context": "ext learning), a novel framework that integrates graph-based forecasting with the zero-shot calibration capabilities of tabular foundation models. stoic first generates point forecasts using an stgnn and subsequently reformulates spatial-temporal ",
+   "why": "能量时间序列保形推断：tabular foundation model 只是标定工具，主题是能源预测",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.20507",
+   "domain": "00-电商Agent",
+   "word": "shopping",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.6211,
+   "title_has_word": false,
+   "context": "emantic variable extraction on the cache-hit path and speculative drafting during target-llm generation. experiments on shopping-style request datasets, webshop, formula, and codetat-qa show that cachespec reduces inference latency and improves eff",
+   "why": "CacheSpec：LLM 推理缓存/投机解码，shopping 只是评测数据集之一",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2609.03337",
+   "domain": "12-ML基础",
+   "word": "tabular",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.6415,
+   "title_has_word": false,
+   "context": "seline, not a constant. both parameters are then estimated from one classification suite and the compaction standard. a tabular foundation model reaches r2 0.824 for density and 0.784 for water content under random folds. it reaches 0.727 and 0.69",
+   "why": "土壤压实试验语料：主题是岩土数据集，tabular FM 只是基线模型",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2609.00427",
+   "domain": "09-DataAgent-LLM",
+   "word": "database",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.6445,
+   "title_has_word": false,
+   "context": "specialized sub-agents that retrieve and synthesize knowledge across policy proceedings, legal regulations, and license databases. we develop specbench, a question and answer (q&a) dataset based on real-world license records and policy proceedings,",
+   "why": "SpecMind 多智能体 RAG：跨 policy/legal/license databases，落在 09 与 10 之间",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.03659",
+   "domain": "12-ML基础",
+   "word": "tabular",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.6483,
+   "title_has_word": false,
+   "context": " learning of rdbs. even for single-table learning tasks, deep learning methods designed for rdbs outperform the leading tabular foundation model, tabpfn 2.5. extending learning from a single table (hop = 0) to multiple tables (hop = 1, 2) by conne",
+   "why": "Deep Relational Database Learning 基准：单表/多表学习与 tabular 基线，12 的邻域但不是特征工程/评估基础",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.17915",
+   "domain": "12-ML基础",
+   "word": "tabular",
+   "label": "POLLUTION",
+   "confidence": "medium",
+   "first_frac": 0.6486,
+   "title_has_word": false,
+   "context": "man-in-the-loop checkpoints, and drift-aware feedback loops. a prototype-based evaluation is conducted using controlled tabular benchmark datasets with missing values, categorical variables, outliers, class imbalance, and simulated covariate drift",
+   "why": "LLM 编排的数据工程/AutoML/MLOps 平台：tabular 只是评测数据形态，主体是 09",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.26500",
+   "domain": "05-推荐系统",
+   "word": "item",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.652,
+   "title_has_word": false,
+   "context": " reduces cross-route overlap. we publicly release kwai26, a large-scale multi-objective benchmark with 1.31 billion raw item-level records, 31.85 million item-id entries, and 25.03 million items with valid semantic ids, together with predefined",
+   "why": "Multi-Decoder OneRec：工业推荐 + 生成式检索，主题即推荐",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.01548",
+   "domain": "12-ML基础",
+   "word": "tabular",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.66,
+   "title_has_word": false,
+   "context": " as much as 19% on the covid-deaths dataset. notably, these improvements occur with recent tsfms such as chronos-2. for tabular prediction, efe-tab evolves compact feature programs that add useful interpretable features and remove redundant ones, ",
+   "why": "Evolutionary Feature Engineering for Structured Data：tabular 预测的特征工程，正落 12",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2609.01933",
+   "domain": "04-供应链",
+   "word": "inventory",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.683,
+   "title_has_word": false,
+   "context": "hastic demand, with an item-permutation-equivariant transformer architecture and pathwise-gradient training through the inventory dynamics. across problem sizes up to 1,024 inventory items, or-transformer increasingly outperforms learning-based and ",
+   "why": "OR-Transformer：joint replenishment + inventory dynamics，正落 04",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.01387",
+   "domain": "05-推荐系统",
+   "word": "item",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.6871,
+   "title_has_word": false,
+   "context": "ero-shot prompting to produce more effective and personalized justifications. by aligning user feature preferences with item quality scores, our approach ensures that explanations reflect both user intent and item attributes, improving transpar",
+   "why": "Bi-NAS：推荐系统解释，主题即推荐",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.14835",
+   "domain": "05-推荐系统",
+   "word": "item",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.6876,
+   "title_has_word": false,
+   "context": "ally construct a large-scale offline evaluation dataset for conversational real-estate search, containing 960,000 query-item pairs constructed from both synthetic and production queries and annotated using an llm-as-a-judge framework with human",
+   "why": "LLM 重排用于房地产搜索：重排属 05 正向，但业务垂直不在本库目标域",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.18897",
+   "domain": "05-推荐系统",
+   "word": "item",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.715,
+   "title_has_word": false,
+   "context": "e recommendation. it contains personal intents matching a user's current interests and public intents capturing general item patterns shared across users (e.g., quality, price). finally, to integrate retrieved intents into sequence modeling, we",
+   "why": "SAERec：推荐意图先验，主题即推荐",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.09641",
+   "domain": "00-电商Agent",
+   "word": "e-commerce",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.7564,
+   "title_has_word": false,
+   "context": "tem dynamically navigates the asymmetric costs of missed anomalies versus false positives. empirical evaluations across e-commerce fraud and uci credit datasets show that semantic pareto-dqn successfully shatters the zero-recall trap. it achieves sup",
+   "why": "Semantic Pareto-DQN：金融异常检测，e-commerce fraud 只是数据集之一",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2609.01335",
+   "domain": "12-ML基础",
+   "word": "tabular",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.783,
+   "title_has_word": false,
+   "context": "s: a tree-structured parzen estimator, an incumbent-mutation oracle driven by a per-coordinate bandit, and a pretrained tabular foundation model, all three improving over the uniform random oracle baseline. imabo outperforms all baselines in terms",
+   "why": "Bandits in Prod：推理期超参优化，tabular FM 只是三个 oracle 之一",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.15501",
+   "domain": "00-电商Agent",
+   "word": "assortment",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.7962,
+   "title_has_word": false,
+   "context": "dge-weighted online matching with free disposal, online matching with stochastic rewards, reusable resources, two-sided assortment optimization, configuration allocation (whole-page optimization), adwords, and costly cancellations -- the tutorial equ",
+   "why": "在线资源分配 tutorial：assortment optimization 是它列举的一节，属 OR 算法而非电商",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.01992",
+   "domain": "09-DataAgent-LLM",
+   "word": "database",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.7969,
+   "title_has_word": false,
+   "context": " and report generation. reliability is improved through bess-specific task routing, schema-constrained natural-language database access, hybrid text-image retrieval, and evidence-based answer synthesis. preliminary internal evaluation is reported f",
+   "why": "电池储能故障诊断 RAG 助手：database access 只是其中一个模块",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.31954",
+   "domain": "12-ML基础",
+   "word": "tabular",
+   "label": "POLLUTION",
+   "confidence": "medium",
+   "first_frac": 0.8206,
+   "title_has_word": false,
+   "context": "libration remains anchored in the rct data. it can be paired with conventional machine learning algorithms and emerging tabular foundation models. simulations show that the framework maintains fdr control, with power depending on the base learner ",
+   "why": "个体处理受益人的保形选择：主题是因果（01），tabular FM 只是可选底座",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.24962",
+   "domain": "04-供应链",
+   "word": "inventory",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.8277,
+   "title_has_word": false,
+   "context": "ly trained task-specific reference policies on approximately 1,000 environments including robotics, autonomous driving, inventory management, cybersecurity, trading, and video games. these results demonstrate the feasibility of large-scale offline p",
+   "why": "大规模多任务 RL：inventory management 是约 1000 个环境之一",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2608.13793",
+   "domain": "12-ML基础",
+   "word": "tabular",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.8307,
+   "title_has_word": false,
+   "context": "yesian optimization and provide a blueprint for practitioners to build accurate and robust gps that can even outperform tabular foundation models in terms of prediction accuracy, uncertainty quantification, and inference cost. our contributions ar",
+   "why": "GP 超参 MLE 脆弱性：tabular foundation model 只是对照基线",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.18668",
+   "domain": "00-电商Agent",
+   "word": "e-commerce",
+   "label": "POLLUTION",
+   "confidence": "medium",
+   "first_frac": 0.8596,
+   "title_has_word": false,
+   "context": "rn rationales for coordinator-level clarification, rerouting, or fallback. we evaluate ears in a large-scale production e-commerce assistant supporting enterprise business intelligence workflows. ears improves the overall response pass rate from 68.5",
+   "why": "EARS 子智能体弃答：生产电商助手只是评测场景，主体是 10-MAS",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.18947",
+   "domain": "00-电商Agent",
+   "word": "e-commerce",
+   "label": "POLLUTION",
+   "confidence": "medium",
+   "first_frac": 0.8695,
+   "title_has_word": false,
+   "context": "large-scale agentic workloads with interchangeable models, dsg matches or slightly exceeds native-search accuracy on an e-commerce query-understanding (qiu) workload while cutting search cost by over 98%. real-time grounding is best treated as an opt",
+   "why": "Decoupling Search from Reasoning：agent grounding 架构，e-commerce QIU 只是负载之一",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2607.23030",
+   "domain": "04-供应链",
+   "word": "inventory",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.8916,
+   "title_has_word": false,
+   "context": "e temporal-difference error. numerical experiments support our theoretical findings, and an application to a perishable inventory management problem with shelf-life uncertainty demonstrates the practical effectiveness of the proposed methods.",
+   "why": "MDP 在线策略评估理论：易腐库存只是数值实验的一个应用",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2608.24053",
+   "domain": "00-电商Agent",
+   "word": "e-commerce",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.9048,
+   "title_has_word": false,
+   "context": "oyed at scale across recommendation and search applications, including wechat channels, official accounts, moments, and e-commerce services. we have released the model weights and code to facilitate future research at https://github.com/tencent/wemm-",
+   "why": "WeMM-Embedding 技术报告：多模态嵌入模型，e-commerce services 只是部署面之一",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2608.26051",
+   "domain": "00-电商Agent",
+   "word": "assortment",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.9452,
+   "title_has_word": false,
+   "context": "he belief about the nominal problem-is equal to the minimax gap of a max-min problem. we illustrate our developments in assortment optimization and shortest path problems.",
+   "why": "The Value of Human Expertise：极小极大间隙理论，assortment optimization 只是举例",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2608.04625",
+   "domain": "00-电商Agent",
+   "word": "e-commerce",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.9459,
+   "title_has_word": false,
+   "context": "and online evaluations demonstrate its effectiveness, including a 4.829% improvement in gmv in a real-world short-video e-commerce recommendation system while maintaining positive gains across all guardrail metrics.",
+   "why": "A/B Agent：自演化 agent 做 A/B 策略迭代，落在 02 与 16，应用于短视频电商推荐",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
+  },
+  {
+   "arxiv_id": "2606.20758",
+   "domain": "00-电商Agent",
+   "word": "e-commerce",
+   "label": "POLLUTION",
+   "confidence": "medium",
+   "first_frac": 0.9589,
+   "title_has_word": false,
+   "context": "itectural choice maps directly to a failure mode those incidents exhibit. the prototype is validated on an instrumented e-commerce benchmark with eight injectable failure scenarios.",
+   "why": "根因推导/解释架构：instrumented e-commerce benchmark 只是验证夹具",
+   "class_late": true,
+   "_batch": "P2b 全池普查新增"
   }
- ]
+ ],
+ "topic_class": {
+  "_rule": "某约束词对某域是**主题类**，当且仅当它在候选池上的**域精度 > 0.5**（多头占优线）",
+  "_syntactic_rules_rejected": [
+   "收割查询里被引号括起的短语 ⇒ 太宽：`table`（09 查询三）、`agent`/`llm`/`tool`/`context`（16 查询）全在引号里",
+   "顶层 OR 分支的短语 ⇒ 09 的 `table` 在 AND 分支（对），但 16 的 `agent` 在 `text OR text AND text` 里仍被判成主题",
+   "含空格 / 多个连字符的复合词 ⇒ `text-to-sql` 无空格（漏掉最关键的词），`supply chain` 含空格（误收）",
+   "词长 ≥7 ⇒ 实测把 `item`（05 唯一的类词）整类移除，省掉 5 条真命中误报但也丢掉该域全部召回 —— **未采纳，仅登记**"
+  ],
+  "_window": "污染召回 100% 的阈值窗口是 **[0.4, 0.5]**；>0.5 立刻掉到 65.4%。上界由 `e-commerce`(00)=0.521 与 `database`(09)=0.524 顶住（各只高 0.02）⇒ **窗口很窄，换池子必须重算**。",
+  "_why_0_5": "0.5 是唯一有非任意理由的值（「命中该词比不命中更可能属于本域」），且是窗口内精度最高的一端。其余阈值都是「碰巧能用」。"
+ }
 }

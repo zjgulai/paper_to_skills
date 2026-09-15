@@ -36,6 +36,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -131,6 +132,13 @@ GATES: list[Gate] = [
     # 因为它们**没有一个读过这份文档**。与 #11（文档过期）、#23（交付≠接线）同族。
     Gate("L19c", "规格文档点名的接线点真实存在，且接线状态与代码一致（双向锁）",
          ["candidate_filter.py", "--check-spec"]),
+    # ⚠️ L19d 守的是 `--check` **看不见的一类假话**：`--check` 只问「读数等于基线吗」，
+    # 而基线是我写下的数；类表却是**每次现跑算出来的** ⇒ 「把表冻成一个手写常量、
+    # 值还刚好对得上」它查不出来（#84 过期豁免腐烂的入口）。四条判据：
+    # J1 独立暴力复算类表 · J2 盲区必须是一等输出（全空即判红）·
+    # J3 `judge()` 源码里不许出现类感知字段（AST，三种写法都认）· J4 计数等于基线。
+    Gate("L19d", "主题类表可独立复算 · 盲区已报出 · `judge()` 不含类感知字段",
+         ["candidate_filter.py", "--check-class"]),
     Gate("L4a", "契约生成器：底本与实物一致", ["build_contracts.py", "--check"]),
     Gate("L4b", "契约作业包：批次与材料摘要一致", ["build_contract_workpack.py", "--check"]),
     # --- 契约层判据（J1–J13）---
@@ -558,6 +566,80 @@ def e2e_domain_label_gates(domains_py: Path | None = None,
     return cases, detail
 
 
+def e2e_filter_class_gate(filter_py: Path | None = None) -> tuple:
+    """把 **L19d**（主题类表与类感知读数）端到端跑一遍（真 CLI + **真语料** + 变异源文件）。
+
+    为什么它必须自成一条：`--check-class` 接上时是**绿的**，而一条绿的判据无法自证有劲。
+    ⚠️ 它自己首版就有**两条**假绿，都是这里造出来的负向控制抓到的，逐条登记在案：
+      · J3 的 AST 扫描只查「标识符 / 属性」两种写法，于是最自然的
+        `constraint_evidence(item, domain)["late_class"]`（**下标 + 字符串字面量**）
+        整个溜过去 —— #2/#11/#14/#93/#107 那一族「判据只认一种写法」，这次写错的是新判据自己；
+      · J4 原本写着「`P2S_REPO` 在环境里就跳过基线比对」，而夹具**正是**靠 `P2S_REPO`
+        把脚本钉在真仓库上 ⇒ J4 在负向控制里**永远测不到**，成了摆设。
+      ⇒ 判据要**能被测到**，比判据的措辞更值钱。
+    """
+    filter_py = filter_py or Path(_p("candidate_filter.py"))
+    src = filter_py.read_text(encoding="utf-8")
+    here = filter_py.parent
+    cases, detail = [], []
+
+    J3A = "    title, blob = _blob(item)\n"
+    MUTS = [
+        ("① 反向控制：未变异 ⇒ 必须 exit 0（否则下面「会红」没有意义）", None, 0, None),
+        ("② 类表混入泛词 `table`（= 手写/陈旧类表）⇒ J1 独立复算必须报",
+         ("if p > thr]", 'if p > thr or w == "table"]'), 1, "- J1"),
+        ("③ 阈值改成 2.0（所有域都空 ⇒ 整条读数瞎了）⇒ J2 必须报",
+         ("TOPIC_CLASS_MIN_PRECISION = 0.5", "TOPIC_CLASS_MIN_PRECISION = 2.0"), 1, "- J2"),
+        ("④ `judge()` 用**下标**读 `late_class` ⇒ J3 必须报（首版漏的就是这种写法）",
+         (J3A, J3A + '    if constraint_evidence(item, domain)["late_class"]:\n'
+                     '        return False, "x"\n'), 1, "- J3"),
+        ("⑤ `judge()` 用 **getattr** 读 ⇒ 同 J3（三种写法都要认）",
+         (J3A, J3A + '    if getattr(constraint_evidence(item, domain), "late_class", False):\n'
+                     '        return False, "x"\n'), 1, "- J3"),
+        ("⑥ 把类感知判据改成 `frac >= 0.9`（读数漂）⇒ J4 必须报（原先它被跳过了）",
+         ('ev["late_class"] = frac >= ABSTRACT_TOPICAL_CUT',
+          'ev["late_class"] = frac >= 0.9'), 1, "- J4"),
+    ]
+    with tempfile.TemporaryDirectory() as td:
+        for label, mut, want, jn in MUTS:
+            d = Path(td) / f"m{len(detail)}"
+            d.mkdir()
+            body = src if mut is None else src.replace(mut[0], mut[1], 1)
+            if mut is not None and body == src:
+                cases.append((label + "（**变异没施上力**）", False))
+                detail.append({"case": label, "want": want, "got": None,
+                               "head": "变异锚点没命中 ⇒ 这条不算数"})
+                continue
+            (d / "candidate_filter.py").write_text(body, encoding="utf-8")
+            shutil.copy(here / "domains.py", d / "domains.py")
+            # ⚠️ `P2S_REPO` 钉在**真仓库**上：语料用真的，被换掉的只有被检脚本本身。
+            # 夹具自己造池子的话，「类表算得对不对」就测不到了。
+            env = {**os.environ, "P2S_REPO": str(REPO)}
+            p = subprocess.run([sys.executable, str(d / "candidate_filter.py"), "--check-class"],
+                               capture_output=True, text=True, env=env, timeout=300)
+            out = ((p.stdout or "") + (p.stderr or "")).strip()
+            hit = jn is None or any(ln.strip().startswith(jn) for ln in out.splitlines())
+            cases.append((label, p.returncode == want and hit))
+            detail.append({"case": label, "want": want, "got": p.returncode,
+                           "head": next((ln.strip() for ln in out.splitlines()
+                                         if ln.strip().startswith(("- J1", "- J2", "- J3",
+                                                                   "- J4", "✅", "🔴"))), "")})
+        # ⑦ 池子读不到 ⇒ exit **2**（没测到 ≠ 判红 ≠ 通过）
+        d = Path(td) / "nopool"
+        d.mkdir()
+        (d / "candidate_filter.py").write_text(src, encoding="utf-8")
+        shutil.copy(here / "domains.py", d / "domains.py")
+        env = {**os.environ, "P2S_REPO": str(REPO)}
+        p = subprocess.run([sys.executable, str(d / "candidate_filter.py"), "--check-class",
+                            "--pool", str(Path(td) / "does-not-exist.json")],
+                           capture_output=True, text=True, env=env, timeout=300)
+        out = ((p.stdout or "") + (p.stderr or "")).strip()
+        cases.append(("⑦ 池子读不到 ⇒ exit **2**（不是 0，也不是 1）", p.returncode == 2))
+        detail.append({"case": "⑦ 池子读不到", "want": 2, "got": p.returncode,
+                       "head": out.splitlines()[0] if out else ""})
+    return cases, detail
+
+
 def e2e_filter_spec_gate(filter_py: Path | None = None) -> tuple:
     """把 **L19c**（规格文档 vs 代码）端到端跑一遍（真 CLI + 构造夹具）。
 
@@ -674,6 +756,11 @@ def selftest() -> int:
     res_cases, res_detail = e2e_material_residue_gate()
     cases += res_cases
 
+    # ①d 端到端：**主题类表与类感知读数**（L19d）真的会红 —— 它接上时是绿的，
+    #     而它自己首版有两条假绿（J3 只认两种写法、J4 永远被跳过），都在这里被造出来。
+    cls_cases, cls_detail = e2e_filter_class_gate()
+    cases += cls_cases
+
     # ①c 端到端：**规格文档 vs 代码**（L19c）真的会红 —— 它接上时是绿的，
     #     而它自己首版就演过一次「把事故记录读成现行声明」的假红（台账 #94 同型）。
     spec_cases, spec_detail = e2e_filter_spec_gate()
@@ -743,6 +830,11 @@ def selftest() -> int:
     print("材料归属残留端到端明细（L4k）：")
     for d in res_detail:
         print(f"  want={d['want']} got={d['got']}  {d['case']}")
+    print("主题类表与类感知读数端到端明细（L19d）：")
+    for d in cls_detail:
+        print(f"  want={d['want']} got={d['got']}  {d['case']}")
+        if d["head"]:
+            print(f"      {d['head'][:110]}")
     print("规格文档 vs 代码端到端明细（L19c）：")
     for d in spec_detail:
         print(f"  want={d['want']} got={d['got']}  {d['case']}")
