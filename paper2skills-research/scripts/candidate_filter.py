@@ -198,26 +198,41 @@ STRICT_ECOMMERCE_DOMAINS = {"14-用户分析", "04-供应链"}
 TOPIC_CLASS_MIN_PRECISION = 0.5
 
 
-def domain_precision(items: list[dict]) -> dict:
-    """每个 (域, 约束词) 的**域精度**。只从池子与收割标签算，不读任何手写表。
+def word_precision(items: list[dict], words_by_domain: dict) -> dict:
+    """`{(域, 词): {precision, hits, in_domain}}` —— **任意词表**的域精度。
 
-    返回 `{(domain, word): {"precision": float|None, "hits": int, "in_domain": int}}`。
+    域精度定义（P2b 立的唯一判据）：
+
+        域精度(d, w) = 「题名或摘要命中 w 的论文」里「query_groups 解析后含 d」的比例
+
     `hits == 0`（该词在池子里从没出现）⇒ precision 为 None，**不是 0** ——
     「没测到」与「测了是 0」是两件事（本仓库危险性排序 3 > 2 > 1 > 0）。
+
+    ⚠️ 本函数是 `domain_precision()` 抽出来的**同一份实现**，P3 让**正向词**也能走它。
+    抽出来而不是在别处再写一遍，理由与 S12 的 N2 相同：**判据只许有一处实现**。
+    调用方须自担一件事：`words_by_domain` 里的词若来自该域**自己的收割查询**，
+    精度会被「按构造贴标签」抬高（独占短语尤甚）—— 那是**仪器的性质**，
+    不是词的性质，读数里必须与精度一起报（见 `check_keyword_tables.py --adjudicate`）。
     """
     resolved = {}
     for it in items:
         resolved[_item_id(it)] = set(_domains.resolve_groups(it.get("query_groups") or [])["resolved"])
+    blobs = _blobs(items)
     out: dict = {}
-    for dom, words in DOMAIN_CONSTRAINT.items():
+    for dom, words in words_by_domain.items():
         for w in words:
-            hits = [k for k, (t, a, _m) in _blobs(items).items() if w in t or w in a]
+            hits = [k for k, (t, a, _m) in blobs.items() if w in t or w in a]
             in_dom = sum(1 for k in hits if dom in resolved.get(k, ()))
             out[(dom, w)] = {
                 "precision": (in_dom / len(hits)) if hits else None,
                 "hits": len(hits), "in_domain": in_dom,
             }
     return out
+
+
+def domain_precision(items: list[dict]) -> dict:
+    """每个 (域, **约束**词) 的域精度。只从池子与收割标签算，不读任何手写表。"""
+    return word_precision(items, DOMAIN_CONSTRAINT)
 
 
 def _blobs(items: list[dict]) -> dict:

@@ -152,6 +152,24 @@ GATES: list[Gate] = [
          ["check_pipeline_chain.py", "--check"]),
     Gate("L19f", "第 2 环接线：自检（J1/J2/J3 各有能失败的反向控制）",
          ["check_pipeline_chain.py", "--selftest"], kind="selftest"),
+    # --- 词表三向对账与 274 条裁决（PHASE6 P3；本轮新增）---
+    # ⚠️ L20a 守的是**三个门禁都看不见的一类差**：三段式检索词住在三个互不相识的地方
+    # （散文 §2 / `arxiv_harvest.QUERY_GROUPS` / `candidate_filter` 的两张表），
+    # 而**没有任何门禁比对过它们**。上一批把 274 条被丢的论文登记为「待裁决」时写下
+    # 「要判错杀得问它是否也该被那个域的收割查询捞到，**那要正向词表**」——
+    # 那张表其实一直在（就是 `QUERY_GROUPS`），只是没人把三向接起来。
+    Gate("L20a", "词表三向对账：§2 与规范域双向完备 · 覆盖率锁 · 无表域登记不过期",
+         ["check_keyword_tables.py", "--check"]),
+    Gate("L20b", "词表三向对账：自检（含续行 / 同行换栏 / AST 注解写法三条回归）",
+         ["check_keyword_tables.py", "--selftest"], kind="selftest"),
+    # ⚠️ L20c 守的是一句**已经写进报告的话**：「274 条里 226 条换一张域表就能过」。
+    # 逐条复算核对到 226/226，然后把它**拆开**：有主题证据 13 / 只有上下文 213。
+    # 「过表」几乎不携带归属信息（`table` 域精度 0.195，任何一篇提到 Table 1 的都能过 09 的表），
+    # 所以那个数**不是错杀的证据** —— 这条门禁就是不让它在下一次被当成证据用。
+    Gate("L20c", "274 条被丢弃论文的裁决：四态恒等式 · 救回证据只许来自有表的域 · 226 的分解",
+         ["check_keyword_tables.py", "--adjudicate"]),
+    Gate("L20d", "词表三向对账：变异测试（4 条篡改副本 + 反向控制「真仓库不许已经红」）",
+         ["check_keyword_tables.py", "--mutate"], kind="selftest"),
     Gate("L4a", "契约生成器：底本与实物一致", ["build_contracts.py", "--check"]),
     Gate("L4b", "契约作业包：批次与材料摘要一致", ["build_contract_workpack.py", "--check"]),
     # --- 契约层判据（J1–J13）---
