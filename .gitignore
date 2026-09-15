@@ -108,6 +108,10 @@ _backup/
 !paper2skills-research/data/recommendations.csv
 !paper2skills-research/data/recommendations.json
 !paper2skills-research/data/skill_audit.json
+# 约束词显著性校准集（PHASE6 P2）：**不是中间产物** —— 它逐条记着「顺带提及」那一类
+# 的 id、上下文与判断理由，是 28 条全体普查（非抽样）的结论，重算要重读一遍原文。
+# `candidate_filter.py --check-labels` 守它的时效（池子/词表变了就判红要求重标）。
+!paper2skills-research/data/constraint-salience-labels.json
 # 缺口账与靶区工单（PHASE6 F3）：**不是中间产物** —— S3/S4/S12 直接消费它的顺序与格号。
 # 提升入库的理由同 skill_audit.json：它是一份要被下游引用的账，重算需要跨仓库依赖
 # （产品侧 dsh-paper2skills/data/classification.json），不是随手可再生的中间态。

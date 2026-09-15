@@ -113,6 +113,24 @@ GATES: list[Gate] = [
          ["migrate_domain_labels.py", "--check"]),
     Gate("L18f", "域名迁移：自检（判定不变 / 幂等 / 前缀碰撞）",
          ["migrate_domain_labels.py", "--selftest"], kind="selftest"),
+    # --- 约束词的证据形态与规格文档对账（PHASE6 P2；本轮新增）---
+    # L19a/L19b 守的是一条**刻意的不作为**：上一批登记「补 text-to-sql 会放进 4 篇顺带
+    # 提及的论文，区分点是标题 vs 摘要的显著性」。本批逐条读原文后：**代价是 9 篇不是 4 篇**，
+    # 而该假设的两个机械形式**都被实测推翻**（字面版砍 326/597 个仅摘要保留对；
+    # 深度版在全池上既漏 3/9 真污染、又标出 62 条上下文词的尾部出现）。
+    # ⇒ 本批把命中形态做成**一等读数**（五态，逐 (论文,域) 落进产物、计数进 `--check` 基线），
+    # 但**判定一字不改**（772 / 1046 逐项不变）。「不许据此丢弃」由 selftest 的守卫判据
+    # 与变异 M10 常驻守着 —— 新增「只标不判」，必须写清什么情况下不许不判。
+    Gate("L19a", "约束词校准集：仍描述着当前池子（池子/词表变了就判红要求重标）",
+         ["candidate_filter.py", "--check-labels"]),
+    Gate("L19b", "三段式过滤器：变异测试 10/10（含「形态顺序倒置」与「降为丢弃」两条守卫）",
+         ["candidate_filter.py", "--mutate"], kind="selftest"),
+    # ⚠️ L19c 守的是**三个门禁都看不见的一类假话**：`关键词库-v2.md` §0 一度点名的
+    # `apply_negative_filter()` / `require_constraint()` **在全仓库只出现一次，就是那一行**
+    # —— 读起来像在引用现成代码，实际在描述一件从未存在过的事；而 L18a–L18f 全绿，
+    # 因为它们**没有一个读过这份文档**。与 #11（文档过期）、#23（交付≠接线）同族。
+    Gate("L19c", "规格文档点名的接线点真实存在，且接线状态与代码一致（双向锁）",
+         ["candidate_filter.py", "--check-spec"]),
     Gate("L4a", "契约生成器：底本与实物一致", ["build_contracts.py", "--check"]),
     Gate("L4b", "契约作业包：批次与材料摘要一致", ["build_contract_workpack.py", "--check"]),
     # --- 契约层判据（J1–J13）---
@@ -540,6 +558,105 @@ def e2e_domain_label_gates(domains_py: Path | None = None,
     return cases, detail
 
 
+def e2e_filter_spec_gate(filter_py: Path | None = None) -> tuple:
+    """把 **L19c**（规格文档 vs 代码）端到端跑一遍（真 CLI + 构造夹具）。
+
+    为什么它必须自成一条：L19c 接上时是**绿的**，而一条绿的判据无法自证有劲。
+    ⚠️ 这条门禁自己就演过一次「假红」：首版按**散文**里的 `` `fn()` `` 抓点名，
+    于是我在订正段里**引用的那两个历史错名**被它当成了现行声明（1 条假红 ×2，
+    与台账 #94 同型）。⇒ 判据改为**只读机读规格块**，并在这里用「散文里写着错名
+    但规格块干净」的夹具把那条边界**钉死**（用例 ③）。
+    """
+    filter_py = filter_py or Path(_p("candidate_filter.py"))
+    cases, detail = [], []
+
+    def cli(repo: Path, spec: Path, *args):
+        env = {**os.environ, "P2S_REPO": str(repo)}
+        p = subprocess.run([sys.executable, str(filter_py), "--check-spec",
+                            "--spec", str(spec), *args],
+                           capture_output=True, text=True, env=env, timeout=300)
+        return p.returncode, ((p.stdout or "") + (p.stderr or "")).strip()
+
+    SPEC = """# 规格
+<!-- P2S-SPEC:pipeline
+  1 收割  arxiv_harvest.py
+  2 过滤  candidate_filter.py        wired={wired}
+  3 打分  rank_candidates.py
+-->
+{tail}
+"""
+
+    # ⚠️ 规格块里点名的三个文件**默认就得存在** —— 首版夹具只建了 `candidate_filter.py`，
+    # 于是「干净夹具必须 exit 0」那条反向控制因为 **J1 找不到 rank_candidates.py** 而红：
+    # 红得不是地方（与 #101 同型，只是方向相反）。夹具必须让**除被测判据之外的一切**成立。
+    SPEC_FILES = {"arxiv_harvest.py": "# 收割器\n",
+                  "candidate_filter.py": "# 过滤器\n",
+                  "rank_candidates.py": "# 打分器\n"}
+
+    def make_repo(tmp: Path, name: str, *, scripts: dict | None = None) -> Path:
+        repo = tmp / name
+        sd = repo / "paper2skills-research" / "scripts"
+        sd.mkdir(parents=True)
+        for fn, body in {**SPEC_FILES, **(scripts or {})}.items():
+            (sd / fn).write_text(body, encoding="utf-8")
+        return repo
+
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td)
+        clean = make_repo(tmp, "clean")
+        reader = make_repo(tmp, "reader", scripts={
+            "rank_candidates.py":
+                "import json, pathlib\n"
+                "D = json.loads(pathlib.Path('arxiv_candidates_filtered.json')"
+                ".read_text(encoding='utf-8'))\n"})
+        fresh = make_repo(tmp, "fresh")
+
+        def spec(name: str, body: str) -> Path:
+            p = tmp / f"{name}.md"
+            p.write_text(body, encoding="utf-8")
+            return p
+
+        s_ok = spec("ok", SPEC.format(wired="false", tail="散文里可以随便说。"))
+        s_missing_file = spec("missing_file", SPEC.format(wired="false", tail="").replace(
+            "arxiv_harvest.py", "no_such_script.py"))
+        s_missing_fn = spec("missing_fn", SPEC.format(wired="false", tail="").replace(
+            "rank_candidates.py", "rank_candidates.py（走 build_query() 补捞）"))
+        s_no_block = spec("no_block",
+                          "# 规格\n\n过滤阶段由 `apply_negative_filter()` 与 "
+                          "`require_constraint()` 承担。\n")
+        # ④b 的夹具：规格块在，但**没有 `wired=`** ⇒ 接线判据读不到声明。
+        # 这条专抓「判据静默跳过」：首版 `line.startswith("wired=")` 永远取不到，
+        # 而 J3 被整条跳过、屏幕上却一切正常（本仓库 #99 同族）。
+        s_no_wired = spec("no_wired", SPEC.format(wired="false", tail="").replace(
+            "        wired=false", ""))
+        s_wired_lie = spec("wired_lie", SPEC.format(wired="true", tail=""))
+        # ③ 的夹具：规格块干净，散文里却写着不存在的函数名 ⇒ **不许红**（文档要能引用错话）
+        s_prose_only = spec("prose_only", SPEC.format(
+            wired="false", tail="\n> 订正：本节一度写作 `apply_negative_filter()`。\n"))
+
+        checks = [
+            ("① 规格块点名不存在的 .py ⇒ exit 1", clean, s_missing_file, 1),
+            ("② 规格块点名不存在的 `fn()` ⇒ exit 1", fresh, s_missing_fn, 1),
+            ("③ 散文里写着历史错名、但规格块干净 ⇒ **exit 0**"
+             "（判据只看规格块；这是 L19c 首版假阳性的回归）", clean, s_prose_only, 0),
+            ("④ 没有机读规格块（只有散文）⇒ exit **2**（没测到 ≠ 通过）",
+             clean, s_no_block, 2),
+            ("④b 规格块在但**没有 `wired=`** ⇒ exit **2**"
+             "（专抓「J3 被静默跳过而屏幕上看不出来」）", clean, s_no_wired, 2),
+            ("⑤ `wired=true` 而无人读过滤产物 ⇒ exit 1（「交付」被写成「接线」）",
+             clean, s_wired_lie, 1),
+            ("⑥ `wired=false` 而**有**脚本读过滤产物 ⇒ exit 1（接线已发生，文档没跟上）",
+             reader, s_ok, 1),
+            ("⑦ 反向控制：干净夹具上必须 exit 0", clean, s_ok, 0),
+        ]
+        for label, repo, sp, want in checks:
+            got, out = cli(repo, sp)
+            cases.append((label, got == want))
+            detail.append({"case": label, "want": want, "got": got,
+                           "head": out.splitlines()[-1] if out else ""})
+    return cases, detail
+
+
 def selftest() -> int:
     """runner 自检 —— 判据，每条都能失败。"""
     cases = []
@@ -556,6 +673,11 @@ def selftest() -> int:
     #     而一条绿的判据无法自证有劲，只能靠造一份该红的输入来问。
     res_cases, res_detail = e2e_material_residue_gate()
     cases += res_cases
+
+    # ①c 端到端：**规格文档 vs 代码**（L19c）真的会红 —— 它接上时是绿的，
+    #     而它自己首版就演过一次「把事故记录读成现行声明」的假红（台账 #94 同型）。
+    spec_cases, spec_detail = e2e_filter_spec_gate()
+    cases += spec_cases
 
     # ② runner 会把「红」传播出来（用一个故意 exit 1 的假门禁）
     fake = Gate("FAKE-RED", "假门禁（应判红）", ["run_phase6_gates.py", "--list"])
@@ -621,6 +743,11 @@ def selftest() -> int:
     print("材料归属残留端到端明细（L4k）：")
     for d in res_detail:
         print(f"  want={d['want']} got={d['got']}  {d['case']}")
+    print("规格文档 vs 代码端到端明细（L19c）：")
+    for d in spec_detail:
+        print(f"  want={d['want']} got={d['got']}  {d['case']}")
+        if d["head"]:
+            print(f"      {d['head'][:110]}")
     return 0 if n_ok == len(cases) else 1
 
 

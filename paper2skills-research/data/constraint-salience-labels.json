@@ -1,0 +1,336 @@
+{
+ "_what": "约束词命中的「显著性」标注集（PHASE6 P2）。**全体普查，不是抽样**：上一批新补进约束表的 7 个主题短语（text-to-sql / data analysis agent / autonomous data science / aspect-based sentiment / opinion mining / marketing mix / media mix）在 3 个域里**只在摘要命中**的全部 (论文,域) 对，共 28 条。",
+ "_why": "上一批把「补 text-to-sql 会放进 4 篇顺带提及的论文」登记为代价，并假设「真命中与它们的区分点是标题 vs 摘要的显著性」。本批逐条读原文复核：**污染是 9 条不是 4 条**，且该假设的两个机械形式都被实测推翻。这份标注集是给下一个写规则的人用的**校准集**，也是本批唯一能拿出的真读数。",
+ "_labels": {
+  "POLLUTION": "主题在别处，本域短语只作为评测设置的一员或评测基准名出现",
+  "BORDERLINE": "与 09 域相邻但本域短语不是研究对象；判真命中或污染都能说通",
+  "GENUINE": "本域短语是论文自己的研究对象"
+ },
+ "_reviewed_by": "主控逐条读 arXiv 摘要原文（上下文由脚本从池子逐字截取，非复述）",
+ "_reviewed_at": "2026-09-14",
+ "_expires_when": "候选池重新收割、或 7 个主题短语中任一条从约束表移除/改写时 —— 届时 `candidate_filter.py --check-labels` 会判红要求重标（防过期豁免腐烂）",
+ "title_priority_regression": {
+  "_why": "本批测量脚本首版按约束词表顺序「撞上第一个就 break」，于是这三篇**题目即主题**的论文只因先撞上表里的 `table` 就被标成「顺带提及」。修法是**把题名自证前置**。夹具能证明「顺序错了会红」，这三条真 id 证明「真语料上确实就是它们」。",
+  "ids": [
+   "2609.00834",
+   "2607.06229",
+   "2606.29733"
+  ],
+  "must_be": "SELF_EVIDENT"
+ },
+ "counts": {
+  "BORDERLINE": 4,
+  "GENUINE": 15,
+  "POLLUTION": 9
+ },
+ "cases": [
+  {
+   "arxiv_id": "2608.07946",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.0,
+   "title_has_word": false,
+   "context": "Text-to-SQL benchmarks ship schemas whose column names already say what the columns mean. Production ",
+   "why": "`text-to-SQL benchmarks ship schemas whose column names already say what the columns mean` —— 作为设定/对照被提及，主题是**列语义恢复**（数据管理，与 09 相邻）"
+  },
+  {
+   "arxiv_id": "2608.15931",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.22,
+   "title_has_word": false,
+   "context": "s. Existing LLM evaluations largely target general-purpose code generation or declarative text-to-SQL, leaving procedural database programming underexplored. PLSQLBench contains 2,865 instanc",
+   "why": "`largely target general-purpose code generation or declarative text-to-SQL, leaving procedural database programming underexplored` —— text-to-SQL 是对照项，但论文是**数据库程序化编程**基准，与 09 域相邻"
+  },
+  {
+   "arxiv_id": "2609.00367",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.1,
+   "title_has_word": false,
+   "context": "cated data engineering tasks such as generating structured queries from natural language, Text-to-SQL, and automating complex spreadsheet operations. However, maximizing their utility demands",
+   "why": "`data engineering tasks such as generating structured queries from natural language, text-to-SQL, and automating complex spreadsheet operations` —— 枚举，但论文主题是**数据工程的神经符号方法**，与 09 相邻"
+  },
+  {
+   "arxiv_id": "2609.07629",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "BORDERLINE",
+   "confidence": "low",
+   "first_frac": 0.246,
+   "title_has_word": false,
+   "context": "ies that frame the problem under their own conventions, such as table question answering, text-to-SQL, and data analysis agents, with works six times as likely to cite within the same task la",
+   "why": "`such as table question answering, text-to-SQL, and data analysis agents` 也是枚举，但论文本身就是**表格洞察抽取的立场/综述**，落在 09 域边缘"
+  },
+  {
+   "arxiv_id": "2607.22443",
+   "domain": "09-DataAgent-LLM",
+   "word": "data analysis agent",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.0,
+   "title_has_word": false,
+   "context": "Data analysis agents are becoming increasingly common tools for applied and scientific research. Yet, for hig",
+   "why": "`data analysis agents are becoming increasingly common tools for applied and scientific research` —— 首句即研究对象"
+  },
+  {
+   "arxiv_id": "2607.20056",
+   "domain": "07-NLP-VOC",
+   "word": "aspect-based sentiment",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.0,
+   "title_has_word": false,
+   "context": "Aspect-based sentiment analysis (ABSA) in Arabic must recover both explicitly stated aspects and implicit aspect",
+   "why": "`aspect-based sentiment analysis (ABSA) in Arabic must recover both explicitly stated aspects and implicit aspects` —— 首句即研究对象"
+  },
+  {
+   "arxiv_id": "2608.20831",
+   "domain": "07-NLP-VOC",
+   "word": "aspect-based sentiment",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.0,
+   "title_has_word": false,
+   "context": "Aspect-based sentiment analysis (ABSA) quadruple extraction requires jointly predicting target, aspect, opinion,",
+   "why": "`aspect-based sentiment analysis (ABSA) quadruple extraction requires ...` —— 首句即研究对象"
+  },
+  {
+   "arxiv_id": "2607.11207",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "GENUINE",
+   "confidence": "medium",
+   "first_frac": 0.385,
+   "title_has_word": false,
+   "context": " to the difficulty of long text modeling and the limitation of input length for LLMs. The text-to-SQL approach is used to efficiently extract key information from tables and generate smaller ",
+   "why": "`the text-to-SQL approach is used to efficiently extract key information from tables` —— 把 text-to-SQL 当作方法本体使用"
+  },
+  {
+   "arxiv_id": "2607.13311",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.275,
+   "title_has_word": false,
+   "context": "ext. We argue that this step warrants first-class evaluation. To this end, we recast five text-to-SQL datasets (Spider, BIRD, BEAVER, and two LiveSQLBench variants) as retrieval tasks at both",
+   "why": "`we recast five text-to-SQL datasets (Spider, BIRD, ...) as retrieval tasks` —— 研究对象是 text-to-SQL 的表/列检索环节"
+  },
+  {
+   "arxiv_id": "2607.15901",
+   "domain": "09-DataAgent-LLM",
+   "word": "autonomous data science",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.055,
+   "title_has_word": false,
+   "context": "Despite strong capabilities in data understanding and decision-making, autonomous data science agents still heavily rely on trial-and-error workflows that involve expensive computation",
+   "why": "`autonomous data science agents still heavily rely on trial-and-error workflows` —— 首段即研究对象"
+  },
+  {
+   "arxiv_id": "2607.28033",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "GENUINE",
+   "confidence": "medium",
+   "first_frac": 0.163,
+   "title_has_word": false,
+   "context": "management and processing. However, existing benchmarks predominantly focus on simplified Text-to-SQL translation or data analysis, leaving the critical and complex domain of end-to-end data ",
+   "why": "`predominantly focus on simplified text-to-SQL translation or data analysis, leaving ... end-to-end data engineering` —— 研究对象是数据工程智能体评测"
+  },
+  {
+   "arxiv_id": "2608.03794",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.194,
+   "title_has_word": false,
+   "context": "ators (DBAs). However, current evaluation benchmarks remain disproportionately fixated on Text-to-SQL tasks, neglecting the holistic Database Lifecycle-from initial schema design to post-depl",
+   "why": "`benchmarks remain disproportionately fixated on text-to-SQL tasks, neglecting the holistic database lifecycle` —— 研究对象是数据库全生命周期评测"
+  },
+  {
+   "arxiv_id": "2608.05906",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.124,
+   "title_has_word": false,
+   "context": "over similar solutions. We study whether finalized repair outcomes can improve subsequent Text-to-SQL episodes without parameter updates. We introduce MERIT, a training-free agent that mainta",
+   "why": "`we study whether finalized repair outcomes can improve subsequent text-to-SQL episodes` —— 明确以 text-to-SQL 为研究对象"
+  },
+  {
+   "arxiv_id": "2608.13926",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.056,
+   "title_has_word": false,
+   "context": "models have made natural language interfaces to databases (NLIDB) newly credible, but LLM text-to-SQL systems fail in a way that matters for deployment: a hallucinated column or a mis-aggrega",
+   "why": "`LLM text-to-SQL systems fail in a way that matters for deployment` —— 研究对象即 NLIDB/text-to-SQL 的拒答"
+  },
+  {
+   "arxiv_id": "2608.15145",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.043,
+   "title_has_word": false,
+   "context": "Large Language Models (LLMs) have been increasingly adopted in Text-to-SQL systems, yet SQL errors remain a major obstacle in real-world Text-to-SQL inference pipel",
+   "why": "`LLMs have been increasingly adopted in text-to-SQL systems, yet SQL errors remain a major obstacle` —— 研究对象即 text-to-SQL 纠错"
+  },
+  {
+   "arxiv_id": "2608.26157",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.129,
+   "title_has_word": false,
+   "context": "s, invalid joins, wrong grain, unsafe data access, and unsupported explanations. Existing text-to-SQL systems often ground generation in database schemas or retrieved documentation, while ent",
+   "why": "`existing text-to-SQL systems often ground generation in database schemas ... GROUND is compared with direct schema-only text-to-SQL` —— 研究对象即 text-to-SQL 的落地与对照"
+  },
+  {
+   "arxiv_id": "2609.03898",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.105,
+   "title_has_word": false,
+   "context": "uage (NL) interfaces to databases have been optimized for the wrong problem. The dominant Text-to-SQL paradigm assumes that users ask questions that can be answered by single SQL queries. In ",
+   "why": "`the dominant text-to-SQL paradigm assumes that users ask questions that can be answered by single SQL queries` —— 论文就在质疑这个范式本身"
+  },
+  {
+   "arxiv_id": "2606.16878",
+   "domain": "15-营销投放分析",
+   "word": "marketing mix",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.206,
+   "title_has_word": false,
+   "context": "el insights without relying on user-level tracking. However, the two dominant approaches, Marketing Mix Modeling (MMM) and Multi-Touch Attribution (MTA), often produce fragmented insights. MMM ",
+   "why": "`the two dominant approaches, marketing mix modeling (MMM) and multi-touch attribution (MTA)` —— 研究对象即 MMM 与 MTA 的整合"
+  },
+  {
+   "arxiv_id": "2606.30992",
+   "domain": "15-营销投放分析",
+   "word": "marketing mix",
+   "label": "GENUINE",
+   "confidence": "high",
+   "first_frac": 0.704,
+   "title_has_word": false,
+   "context": " based on marketing spend correlation to reduce collinearity, and to implement a Bayesian Marketing Mix Model with cluster-level data. Such clustering happens in two steps -- we first normalize",
+   "why": "`to implement a Bayesian marketing mix model with cluster-level data` —— 研究对象即 MMM（**摘要 70% 深处**，是本批深度规则唯一的假阳性）"
+  },
+  {
+   "arxiv_id": "2607.07026",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.785,
+   "title_has_word": false,
+   "context": "ross various tasks including function calling (xLAM, BFCL), planning (Sudoku, Countdown), text-to-SQL (Spider), and math reasoning (GSM-Symbolic), with little inference overhead relative to u",
+   "why": "`tasks including function calling (xlam, bfcl), planning (sudoku, countdown), text-to-SQL (spider), and math reasoning` —— 四项评测任务之一，主题是扩散语言模型的约束解码"
+  },
+  {
+   "arxiv_id": "2607.08124",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.747,
+   "title_has_word": false,
+   "context": "e frozen LLM, so all adaptation occurs through changes to the surrounding program. Across text-to-SQL, competitive programming, software engineering, data-science coding, and agentic tool-use",
+   "why": "`across text-to-SQL, competitive programming, software engineering, data-science coding, and agentic tool-use tasks` —— 五项任务枚举之首，主题是测试期 harness 演化"
+  },
+  {
+   "arxiv_id": "2607.14506",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.883,
+   "title_has_word": false,
+   "context": "four domains: mathematical problem-solving, programming, general-knowledge reasoning, and Text-to-SQL. Our bounds exceed the accuracy of the base model by 9-51% and lie within 6-11% of the ac",
+   "why": "`four domains: mathematical problem-solving, programming, general-knowledge reasoning, and Text-to-SQL` —— 四个评测域的最后一项，主题是 RLVR 泛化界"
+  },
+  {
+   "arxiv_id": "2607.25243",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.669,
+   "title_has_word": false,
+   "context": "esentation. The first evaluates natural-language-to-query translation beyond conventional text-to-SQL and text-to-Cypher benchmarks, including 3D spatial reasoning, provenance-aware filtering",
+   "why": "`beyond conventional text-to-SQL and text-to-Cypher benchmarks` —— 作为对照基准被提及，主题是 3D 城市知识图谱"
+  },
+  {
+   "arxiv_id": "2608.00017",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.882,
+   "title_has_word": false,
+   "context": "nswer-free de-inflation algorithm LUCID delivers a consistent end-to-end gain on the BIRD text-to-SQL benchmark. It raises execution accuracy to $56.9\\%$, above both a Memento-style self-grad",
+   "why": "`on the BIRD text-to-SQL benchmark` —— 唯一的评测基准名，主题是自改进 LLM 智能体的奖励膨胀"
+  },
+  {
+   "arxiv_id": "2608.04968",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.822,
+   "title_has_word": false,
+   "context": "ntroduces scope-typed, evidence-guided program aggregation. Across five settings spanning text-to-SQL, data-science coding, competitive programming, software engineering, and agentic workflow",
+   "why": "`across five settings spanning text-to-SQL, data-science coding, competitive programming, software engineering, and agentic workflows` —— 五项评测设置枚举之首，主题是 harness 演化"
+  },
+  {
+   "arxiv_id": "2608.08514",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.503,
+   "title_has_word": false,
+   "context": "re-implement LCF's projector, contrastive, and intervention pipeline, then extend both to text-to-SQL, legal extraction, fallacy identification, and precedent grading, and probe LCF's represe",
+   "why": "`extend both to text-to-SQL, legal extraction, fallacy identification, and precedent grading` —— 四项枚举之一，主题是 LLM 推理可靠性复现"
+  },
+  {
+   "arxiv_id": "2608.20918",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.526,
+   "title_has_word": false,
+   "context": "s stay within training noise, with durability ranging from under one release interval for text-to-SQL to over fourteen months for intent classification. Direct adapter copying depends neither",
+   "why": "`durability ranging from under one release interval for text-to-SQL to over fourteen months for intent classification` —— 并列对比里的一个成员，主题是微调模型升级基准"
+  },
+  {
+   "arxiv_id": "2608.26730",
+   "domain": "09-DataAgent-LLM",
+   "word": "text-to-sql",
+   "label": "POLLUTION",
+   "confidence": "high",
+   "first_frac": 0.751,
+   "title_has_word": false,
+   "context": "and only observed events extend memory. On one 4B model adapted across finance reasoning, text-to-SQL, and function calling, candidate updates exhibit heterogeneous target and retention effec",
+   "why": "`across finance reasoning, text-to-SQL, and function calling` —— 只是在**列举评测域**，论文主题是 LLM 后训练经验迁移"
+  }
+ ]
+}
