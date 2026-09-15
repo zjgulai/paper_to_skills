@@ -25,7 +25,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 | J5 | **改了工单，检索式必须变**（当作失败条件断言） | 假仪表：改责任名/域/岗位，输出岿然不动（等于所有工单共用一张模板）；反面用「改无关字段必须**不**变」兜住「什么都变」 | ✅ 责任名 1 条 / 域 1 条 / 岗位 1 条发生变化；改无关字段 0 条变化 |
 | J6 | 不同工单的检索式彼此不同（相似度分布 + 空壳） | 模板套壳（31 条只换责任名）。四个方向都判：全向量上界、交叉项上界、空壳计数、**空交叉项计数（两个方向）**、同域池条目对上限 | ✅ 交叉项 Jaccard max 0.2（均 0.0025）／全向量 max 0.9118；空壳 0 条；空交叉项 2 条；同域池条目对 4 对 |
 | J7 | **负向词按域生效**，不是全局清单 | 无脑全局负向 ⇒ 误杀方法论论文（`trial`/`cohort`/`ad`）；或「按域」只是文档说法、代码里其实全域生效 | ✅ 从 filter **现算**分歧矩阵：56 个词在不同域状态相反，56 个被**真实配对**用上，载体 28 条 |
-| J8 | 产物能被 `candidate_filter.py` **直接消费**（同一个配置格式） | 另造一套格式 ⇒ 生成完还要人肉翻译，检索式形同废纸；或域名不在 `DOMAIN_DIR` 里 ⇒ filter **静默跳过**（保留全部 = 没过滤） | ✅ 域名全在 `DOMAIN_DIR`；负向词/约束词与 filter 逐项相等（3 域走 `harvest_domain_of` 桥接，已登记） |
+| J8 | 产物能被 `candidate_filter.py` **直接消费**（同一个配置格式） | 另造一套格式 ⇒ 生成完还要人肉翻译，检索式形同废纸；或域名不在 `DOMAIN_DIR` 里 ⇒ filter **静默跳过**（保留全部 = 没过滤） | ✅ 域名全在 `DOMAIN_DIR`；负向词/约束词与 filter 逐项相等；**域名两侧同源**（`domains.py`，桥接表已删） |
 | J9 | 契约挂载点：`responsibility` / `contract_id` 与 `check_contracts.py` 键名对齐 | 自己发明键名 ⇒ 卡产出后无处可挂；或一份没挂上却报过；或同一责任两份正式契约时静默挑一份 | ✅ 28/28 条挂上契约（契约池 139 份） |
 | J10 | 排序权重**不进任何判定**（风险 N1） | 把 `zero_gap`/`score` 之类排序分当成放行条件 ⇒ 分数决定谁过闸；反面：全文扫会打中文档注释（假红），故按 AST 取判据函数体 | ✅ AST 扫 11 个判据函数、0 命中；反向探针注入即被抓；反向控制（注入非判据函数**不**报）生效 |
 | ARTIFACT | 产物一致性：盘上产物 = 现场重建（**只报不改**） | 门禁先按上游现状把滞后产物**改对**、再宣称「一致」 ⇒ 它永远报不出它本该报的那件事（2026-09-14 实测：改坏的产物被重写回正确值，exit 0） | **比对型判据，读数只在 `--check` 下产生**：不一致 / 产物缺失 ⇒ exit 1，**且判据不写盘**；反向控制「判红之后盘上仍是坏值」在 `--mutate` 的 (C) 节 |
@@ -236,7 +236,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（26，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`code generation benchmark`、`gui agent`、`web agent`、`speech recognition`、`image classification`、`object detection`
   - 仅 `09-DataAgent-LLM` 生效：`code generation benchmark`、`gui agent`、`web agent`
   - 仅 `12-ML基础` 生效：`speech recognition`、`image classification`、`object detection`
-- **约束词**（8）：`analytics`、`business`、`enterprise`、`database`、`table`、`tabular`、`prediction`、`dataset`
+- **约束词**（11）：`analytics`、`business`、`enterprise`、`database`、`table`、`text-to-sql`、`data analysis agent`、`autonomous data science`、`tabular`、`prediction`、`dataset`
 
 ### 位次 3 · 行动组合 · Amazon业务经营（渠道经营）
 
@@ -248,7 +248,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（27，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`adversarial attack`、`adhd`、`alzheimer`、`adversarial example`、`health promotion`、`academic promotion`、`faculty`
   - 仅 `13-广告分析` 生效：`adversarial attack`、`adhd`、`alzheimer`、`adversarial example`
   - 仅 `15-营销投放分析` 生效：`health promotion`、`academic promotion`、`faculty`
-- **约束词**（10）：`advertis`、`marketing`、`campaign`、`budget`、`roas`、`retail`、`e-commerce`、`sales`、`price`、`promotion`
+- **约束词**（12）：`advertis`、`marketing`、`campaign`、`budget`、`roas`、`retail`、`e-commerce`、`sales`、`price`、`promotion`、`marketing mix`、`media mix`
 
 ### 位次 4 · 经营预算 · 经营财务与资金（财务与合规）
 
@@ -260,7 +260,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（29，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`weather`、`climate`、`traffic flow`、`wind power`、`load forecasting`、`seismic`、`health promotion`、`academic promotion`、`faculty`
   - 仅 `03-时间序列` 生效：`weather`、`climate`、`traffic flow`、`wind power`、`load forecasting`、`eeg`、`ecg`、`seismic`
   - 仅 `15-营销投放分析` 生效：`health promotion`、`academic promotion`、`faculty`
-- **约束词**（8）：`demand`、`sales`、`retail`、`inventory`、`e-commerce`、`supply chain`、`price`、`promotion`
+- **约束词**（10）：`demand`、`sales`、`retail`、`inventory`、`e-commerce`、`supply chain`、`price`、`promotion`、`marketing mix`、`media mix`
 
 ### 位次 5 · 差异追踪 · GMV结算与会计对账（财务与合规）
 
@@ -284,7 +284,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（29，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`code generation benchmark`、`gui agent`、`web agent`、`molecular`、`protein`、`drug discovery`、`biomedical`、`chemistry`、`crystal`
   - 仅 `09-DataAgent-LLM` 生效：`code generation benchmark`、`gui agent`、`web agent`
   - 仅 `08-知识图谱` 生效：`molecular`、`protein`、`drug discovery`、`biomedical`、`chemistry`、`crystal`
-- **约束词**（10）：`analytics`、`business`、`enterprise`、`database`、`table`、`e-commerce`、`product`、`customer`、`agent`、`retrieval`
+- **约束词**（13）：`analytics`、`business`、`enterprise`、`database`、`table`、`text-to-sql`、`data analysis agent`、`autonomous data science`、`e-commerce`、`product`、`customer`、`agent`、`retrieval`
 
 ### 位次 7 · 生命周期分析 · 库存与商品生命周期（供应与履约）
 
@@ -356,7 +356,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（27，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`adversarial attack`、`adhd`、`alzheimer`、`adversarial example`、`health promotion`、`academic promotion`、`faculty`
   - 仅 `13-广告分析` 生效：`adversarial attack`、`adhd`、`alzheimer`、`adversarial example`
   - 仅 `15-营销投放分析` 生效：`health promotion`、`academic promotion`、`faculty`
-- **约束词**（10）：`advertis`、`marketing`、`campaign`、`budget`、`roas`、`retail`、`e-commerce`、`sales`、`price`、`promotion`
+- **约束词**（12）：`advertis`、`marketing`、`campaign`、`budget`、`roas`、`retail`、`e-commerce`、`sales`、`price`、`promotion`、`marketing mix`、`media mix`
 
 ### 位次 16 · 品牌反馈 · 品牌战略与传播（品牌与增长）
 
@@ -368,7 +368,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（28，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`clinical note`、`hate speech`、`fake news`、`machine translation`、`pet scan`、`cohort study`、`epidemiolog`、`diagnosis`
   - 仅 `07-NLP-VOC` 生效：`clinical note`、`hate speech`、`fake news`、`machine translation`
   - 仅 `14-用户分析` 生效：`clinical`、`patient`、`mri`、`eeg`、`fmri`、`lesion`、`radiotherapy`、`pet scan`、`tumor`、`cohort study`、`epidemiolog`、`diagnosis`
-- **约束词**（9）：`e-commerce`、`product`、`customer`、`review`、`feedback`、`retail`、`subscription`、`churn`、`user`
+- **约束词**（11）：`e-commerce`、`product`、`customer`、`review`、`feedback`、`aspect-based sentiment`、`opinion mining`、`retail`、`subscription`、`churn`、`user`
 
 ### 位次 17 · 可用性验证 · 工业设计与用户体验（产品与创新）
 
@@ -404,7 +404,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（29，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`health promotion`、`academic promotion`、`faculty`、`npm`、`pypi`、`malware`、`vulnerability`、`repository`、`compiler`
   - 仅 `15-营销投放分析` 生效：`health promotion`、`academic promotion`、`faculty`
   - 仅 `04-供应链` 生效：`software supply chain`、`sbom`、`npm`、`pypi`、`malware`、`vulnerability`、`repository`、`compiler`
-- **约束词**（12）：`retail`、`e-commerce`、`sales`、`price`、`promotion`、`goods`、`physical`、`warehouse`、`fulfillment`、`inventory`、`logistics`、`order`
+- **约束词**（14）：`retail`、`e-commerce`、`sales`、`price`、`promotion`、`marketing mix`、`media mix`、`goods`、`physical`、`warehouse`、`fulfillment`、`inventory`、`logistics`、`order`
 
 ### 位次 20 · 知识产权检索 · 法务与知识产权（财务与合规）
 
@@ -416,7 +416,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（30，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`molecular`、`protein`、`drug discovery`、`biomedical`、`chemistry`、`crystal`、`clinical note`、`hate speech`、`fake news`、`machine translation`
   - 仅 `08-知识图谱` 生效：`molecular`、`protein`、`drug discovery`、`biomedical`、`chemistry`、`crystal`
   - 仅 `07-NLP-VOC` 生效：`clinical note`、`hate speech`、`fake news`、`machine translation`
-- **约束词**（7）：`e-commerce`、`product`、`customer`、`agent`、`retrieval`、`review`、`feedback`
+- **约束词**（9）：`e-commerce`、`product`、`customer`、`agent`、`retrieval`、`review`、`feedback`、`aspect-based sentiment`、`opinion mining`
 
 ### 位次 21 · 达人筛选 · 达人与联盟合作（品牌与增长）
 
@@ -452,7 +452,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（27，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`speech recognition`、`image classification`、`object detection`、`clinical note`、`hate speech`、`fake news`、`machine translation`
   - 仅 `12-ML基础` 生效：`speech recognition`、`image classification`、`object detection`
   - 仅 `07-NLP-VOC` 生效：`clinical note`、`hate speech`、`fake news`、`machine translation`
-- **约束词**（9）：`tabular`、`business`、`prediction`、`dataset`、`e-commerce`、`product`、`customer`、`review`、`feedback`
+- **约束词**（11）：`tabular`、`business`、`prediction`、`dataset`、`e-commerce`、`product`、`customer`、`review`、`feedback`、`aspect-based sentiment`、`opinion mining`
 
 ### 位次 24 · 质量分析 · 生产协同与质量控制（供应与履约）
 
@@ -548,7 +548,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 - **负向词**（29，全局 + 本域）：`software supply chain`、`sbom`、`software bill of materials`、`package detection`、`dependency vulnerability`、`model lineage`、`model card`、`kv cache`、`serving throughput`、`gpu kernel`、`clinical`、`patient`、`lesion`、`mri`、`eeg`、`ecg`、`fmri`、`radiotherapy`、`histopathology`、`tumor`、`npm`、`pypi`、`malware`、`vulnerability`、`repository`、`compiler`、`code generation benchmark`、`gui agent`、`web agent`
   - 仅 `04-供应链` 生效：`software supply chain`、`sbom`、`npm`、`pypi`、`malware`、`vulnerability`、`repository`、`compiler`
   - 仅 `09-DataAgent-LLM` 生效：`code generation benchmark`、`gui agent`、`web agent`
-- **约束词**（13）：`goods`、`physical`、`retail`、`warehouse`、`fulfillment`、`inventory`、`logistics`、`order`、`analytics`、`business`、`enterprise`、`database`、`table`
+- **约束词**（16）：`goods`、`physical`、`retail`、`warehouse`、`fulfillment`、`inventory`、`logistics`、`order`、`analytics`、`business`、`enterprise`、`database`、`table`、`text-to-sql`、`data analysis agent`、`autonomous data science`
 
 ---
 
@@ -608,7 +608,7 @@ S4 把每条工单翻译成一份**三段式检索式**（正向 / 负向 / 约�
 ## 7. 未做 / 继承接项
 
 - **只生成检索式，不执行检索** —— 本任务（S4）的交付物止于「缺口 → 检索式」。真正发查询、收割、打分属下一步。
-- 🔴 **`arxiv_harvest.py` 的域标签与 `candidate_filter.py` 有 4 处实测不一致**（`07-VOC舆情` vs `07-NLP-VOC`、`09-DataAgent` vs `09-DataAgent-LLM`、`15-营销投放` vs `15-营销投放分析`、`00-电商Agent` 在 filter 里**根本没有**）：实测候选池 1046 篇里 **141 篇**（89 + 37 + 9 + 6）的 `query_groups` **全都**不在 `DOMAIN_DIR` 里，会被 `filter_pool` 的 `if not domains: keep` 分支**整篇放行**（负向词与约束词都不生效）。⚠️ 本数字**首次报成了 113** —— 漏算了 `00-电商Agent` 那 37 篇；「漏算」的原因是当时只看了「filter 里有同名域」的三对，没查「filter 里压根没有的域」。**这正是本仓库那条铁律的又一例**：判「某个东西不存在」之前，先问仪器能不能看见它。本任务用 `harvest_domain_of` 在**本侧**折好这 3 对，`00-电商Agent` 不参与本次检索域，**不动上游脚本**（纪律 6），已登录。
+- ✅ **已在上游修掉（2026-09-14，PHASE6 P1）** —— 本行此前登记的是一处实测缺陷：`arxiv_harvest.py` 的域标签与 `candidate_filter.py` 不一致 4 处（`07-VOC舆情`/`09-DataAgent`/`15-营销投放` 三个改名 + `00-电商Agent` 在 filter 里**根本没有**），导致候选池 1046 篇里 **141 篇**（89+37+9+6）的 `query_groups` 全都认不出来，被 `filter_pool` 的 `if not domains: keep` **整篇放行**（负向词与约束词一条都没生效，且**没有任何读数**）。⚠️ 该数字**首次报成了 113** —— 漏算了 `00-电商Agent` 那 37 篇；漏算的原因是当时只看了「filter 里有同名域」的三对，没查「filter 里压根没有的域」。**这正是本仓库那条铁律的又一例**：判「某个东西不存在」之前，先问仪器能不能看见它。**P1 的处置**：域名收进 `domains.py` 唯一事实源（17 规范域，与 vault 目录双向对账）→ 产出端 `arxiv_harvest.py` 直接产规范名并加 fail-loud 守卫 → 盘上产物一次性迁移（`migrate_domain_labels.py`，判定逐篇不变）→ `filter_pool` 的三态改造（**退休名现在会被判成「仪器瞎了」并 `exit 2`，不再被静默折掉**）。读数：判定 905 → **1046**、保留 776 → **772**、静默放行 **141 → 0**（新丢 6 篇逐篇复核均为真污染；另**救回 2 篇** —— 它们的第二个域标签此前也是隐形的）。本任务的 `harvest_domain_of` 桥接表由此**成了死代码，已删**。
 - **结构空白那 3 条不给检索式**（走 SOP）。已装线里与它们同名 L3 的卡为 0，因此连交叉项都取不到材 —— 这不是本脚本的缺陷，是「结构性空白」的定义。
 - **线索评估（位次 1）有 legacy 卡为 0**，但账里 `structural_blank=false` ⇒ 它**进入检索预算**、却**没有交叉项**。已在 §6 逐条标注 ⚠️，请所有者裁决（补齐它的 legacy 归类，或接受它只有域词）。
 - **契约挂载点覆盖率**见 J9 —— `responsibility` 与 `contract_id` 的键名**照抄** `check_contracts.py`，没有自造键名。

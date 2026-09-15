@@ -39,6 +39,14 @@ NS = {
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 
+# ⚠️ 域名的**唯一事实源**是 `domains.py`。本文件此前自写一套旧名
+# （`07-VOC舆情` / `09-DataAgent` / `15-营销投放`），而 `candidate_filter.py` 只认新名
+# ⇒ 标签对不上 ⇒ 那 104 篇被 `if not domains: keep` **整篇放行**、负向词一条都没生效。
+# 现在**产出端直接产规范名**；`domains.ALIASES` 只留给盘上的历史产物当迁移垫片。
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+import domains as _domains  # noqa: E402
+
 # 业务领域 -> 关键词组（每组一条查询，组内 AND，组间 OR 由 arXiv 语法决定）
 QUERY_GROUPS: dict[str, list[str]] = {
     "01-因果推断": [
@@ -71,7 +79,7 @@ QUERY_GROUPS: dict[str, list[str]] = {
         'abs:"user growth" OR abs:"retention" AND abs:"uplift"',
         'abs:"conversion rate prediction" AND abs:"e-commerce"',
     ],
-    "07-VOC舆情": [
+    "07-NLP-VOC": [
         'abs:"aspect-based sentiment" OR abs:"opinion mining"',
         'abs:"customer review" AND (abs:"LLM" OR abs:"large language model")',
         'abs:"review summarization" OR abs:"user feedback" AND abs:"mining"',
@@ -81,7 +89,7 @@ QUERY_GROUPS: dict[str, list[str]] = {
         'abs:"graph neural network" AND abs:"e-commerce"',
         'abs:"entity alignment" OR abs:"knowledge graph completion"',
     ],
-    "09-DataAgent": [
+    "09-DataAgent-LLM": [
         'abs:"data analysis agent" OR abs:"text-to-SQL"',
         'abs:"autonomous data science" OR abs:"insight generation"',
         'abs:"table" AND abs:"agent" AND abs:"reasoning"',
@@ -108,7 +116,7 @@ QUERY_GROUPS: dict[str, list[str]] = {
         'abs:"funnel" AND abs:"conversion"',
         'abs:"cohort" OR abs:"survival analysis" AND abs:"user"',
     ],
-    "15-营销投放": [
+    "15-营销投放分析": [
         'abs:"marketing mix model" OR abs:"media mix"',
         'abs:"promotion" AND abs:"causal" AND abs:"retail"',
     ],
@@ -126,6 +134,30 @@ QUERY_GROUPS: dict[str, list[str]] = {
         'abs:"product selection" OR abs:"assortment optimization"',
     ],
 }
+
+# ---------------------------------------------------------------------------
+# 产出端守卫：**本文件产出的每一个域标签都必须是规范名**（fail loud）
+# ---------------------------------------------------------------------------
+# 这条守卫是这次修复的**根因防线**。旧版的失效链是：
+#   本文件写旧名 → 过滤器的域名表认不出 → `if not domains: keep` → 静默放行。
+# 三环里任何一环单独存在都不致命；致命的是**没有任何一环报错**。
+# 守卫放在**产出端**而不是消费端：让错在**写下它的那一刻**就炸，
+# 而不是等到过滤阶段变成一个「看起来很正常的账」。
+# ⚠️ 加别名「兼容」是**故意不做**的 —— 那等于把漂移合法化，
+# 而这条守卫要的正是「不许漂」。
+_BAD_LABELS = sorted(d for d in QUERY_GROUPS if d not in set(_domains.CANONICAL))
+if _BAD_LABELS:
+    raise SystemExit(
+        "🔴 arxiv_harvest.QUERY_GROUPS 里出现非规范域名："
+        f"{_BAD_LABELS}\n"
+        f"   规范名以 `domains.py` 的 CANONICAL 为准（{len(_domains.CANONICAL)} 个）。\n"
+        "   改成规范名，或先在 domains.py 里显式登记这个新域 ——\n"
+        "   **不许在这里写一个过滤器认不出的名字**：那会让该域的论文被整篇放行。")
+_MISSING = sorted(set(_domains.CANONICAL) - set(QUERY_GROUPS))
+if _MISSING:
+    # 只是提示、不判死：某些域（如 11-AI人文）确实可能没有 arXiv 查询组。
+    print(f"⚠️ 以下规范域在 QUERY_GROUPS 里没有查询组：{_MISSING}"
+          f"（不判死 —— 但该域的候选只能靠别的域捞回来）", file=sys.stderr)
 
 CATEGORY_FILTER = (
     "cat:cs.LG OR cat:cs.AI OR cat:cs.CL OR cat:cs.IR OR cat:cs.DB OR "

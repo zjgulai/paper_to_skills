@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 from datetime import datetime
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,11 +26,36 @@ OUT = ROOT / "paper2skills-vault" / "07-资源库" / "papers_registry.json"
 CODE_DIR = {
     "01-因果推断": "causal_inference", "02-A_B实验": "ab_testing", "03-时间序列": "time_series",
     "04-供应链": "supply_chain", "05-推荐系统": "recommendation", "06-增长模型": "growth_model",
-    "07-VOC舆情": "nlp_voc", "08-知识图谱": "knowledge_graph", "09-DataAgent": "data_agent_llm",
+    "07-NLP-VOC": "nlp_voc", "08-知识图谱": "knowledge_graph", "09-DataAgent-LLM": "data_agent_llm",
     "10-MAS": "mas", "11-AI人文": "ai_humanities", "12-ML基础": "ml_fundamentals",
-    "13-广告分析": "advertising", "14-用户分析": "user_analytics", "15-营销投放": "marketing",
+    "13-广告分析": "advertising", "14-用户分析": "user_analytics", "15-营销投放分析": "marketing",
     "16-智能体工程": "llm_agent_engineering", "00-电商Agent": "ecommerce_agent",
 }
+
+
+# ---------------------------------------------------------------------------
+# 域名守卫（PHASE6 P1）：本文件用到的每个域标签都必须是**规范名**
+# ---------------------------------------------------------------------------
+# 本仓库实测过一次「同一件事 7 处各写一份名字」造成的静默失效：
+# `arxiv_harvest` 写旧名、`candidate_filter` 写新名 ⇒ 1046 篇候选里 141 篇
+# 的负向词与约束词**一条都没生效**（且没有任何读数）。此处照 `arxiv_harvest.py`
+# 的办法，在**自己这一侧** fail loud：认不出的名字当场炸，不留给下游去猜。
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+import domains as _domains  # noqa: E402
+
+
+def _assert_canonical(labels, where: str) -> None:
+    bad = sorted(set(labels) - set(_domains.CANONICAL))
+    if bad:
+        hint = {b: _domains.RETIRED[b] for b in bad if b in _domains.RETIRED}
+        raise SystemExit(
+            f"🔴 {where} 里出现非规范域名：{bad}\n"
+            + (f"   其中这些是**已退休的旧名**，规范名是：{hint}\n" if hint else "")
+            + f"   规范名以 `domains.py` 的 CANONICAL 为准（{len(_domains.CANONICAL)} 个）。")
+
+_assert_canonical(CODE_DIR, "build_registry.CODE_DIR")
+_assert_canonical([d["d"] for d in DECISIONS], "build_registry.DECISIONS 的 `d` 字段")
 
 # 本轮经原文核对（arXiv API / Crossref）后的决策表
 # 字段: arxiv_id, domain, priority, decision, reason, data_availability, venue_verified
@@ -89,7 +115,7 @@ DECISIONS: list[dict] = [
     dict(a="2608.25277", d="10-MAS", p="P0", dec="extract", tier="top",
          reason="Routed Graph Handoff：NL 交接吞 40-60% token，155-token router 选类型化依赖图；τ-retail +12.7pp @3.2× 压缩",
          data="available", note="EMNLP 2026；须配 graph-aware executor prompt，否则失效"),
-    dict(a="2607.22115", d="09-DataAgent", p="P0", dec="extract", tier="second",
+    dict(a="2607.22115", d="09-DataAgent-LLM", p="P0", dec="extract", tier="second",
          reason="RBAC Text-to-SQL 基准：度量越权率与过度拒答率 → 数据 Agent 上线门禁（客服看本店/运营看全店）",
          data="available", note="SIGMOD 2027 已录用（未召开），标注时写'已录用'"),
     # ---------- P1 ----------
@@ -134,7 +160,7 @@ DECISIONS: list[dict] = [
     dict(a="2608.00558", d="10-MAS", p="P1", dec="extract", tier="preprint",
          reason="AiFlow：token 原生反应式编排 + 有界背压（Node Guardian 强制队列上界/取消传播/重试）→ 自建多 Agent 运行时的契约",
          data="available", note="有公开实现（GitHub ModelEngine-G…）"),
-    dict(a="2608.22830", d="09-DataAgent", p="P1", dec="extract", tier="workshop",
+    dict(a="2608.22830", d="09-DataAgent-LLM", p="P1", dec="extract", tier="workshop",
          reason="Beyond the Harness：从生产 SQL 反解 query-DAG，把老师傅的历史查询蒸馏为可复用上下文 → 跨境口径（GMV 是否含退款）沉淀",
          data="available", note="COLM 2026 workshop；与 BIRD-History 同题，建议合并"),
     dict(a="2608.00426", d="10-MAS", p="P1", dec="extract", tier="preprint",
@@ -153,10 +179,10 @@ DECISIONS: list[dict] = [
     dict(a="10.1287/mnsc.2024.03192", d="13-广告分析", p="P1", dec="watch", tier="top",
          reason="Algorithmic Pricing, Price Wars, and Tacit Collusion: Evidence from E-Commerce（Management Science 2026-07-09）— 算法定价的合谋风险，跨境多店铺调价的合规红线",
          data="unavailable", note="顶刊独占主题（arXiv 不会覆盖）；需订阅读全文"),
-    dict(a="10.1287/mksc.2024.0296", d="15-营销投放", p="P1", dec="watch", tier="top",
+    dict(a="10.1287/mksc.2024.0296", d="15-营销投放分析", p="P1", dec="watch", tier="top",
          reason="Large Language Models for Market Research: A Data-Augmentation Approach（Marketing Science 2026-07）— LLM 做市场研究的统计保证，可用于选品前的需求验证",
          data="available", note="顶刊独占；需读全文确认可否复现"),
-    dict(a="10.1287/isre.2023.0456", d="15-营销投放", p="P1", dec="watch", tier="top",
+    dict(a="10.1287/isre.2023.0456", d="15-营销投放分析", p="P1", dec="watch", tier="top",
          reason="Impact of the Invisibles: Personalized Pricing on Platform with Anonymous Users（ISR 2026-08-24）— 个性化定价的隐私与反噬",
          data="partial", note="顶刊独占；DOI 需核对"),
     dict(a="10.1287/mnsc.2023.05123", d="04-供应链", p="P1", dec="watch", tier="top",

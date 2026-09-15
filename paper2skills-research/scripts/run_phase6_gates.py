@@ -96,6 +96,23 @@ GATES: list[Gate] = [
     Gate("L3e", "卡端分类：变异测试（位置锚 vs 内容改变）",
          ["build_card_classification.py", "--mutate"], kind="selftest"),
     # --- 契约生成与作业包（F6/F7/S1）---
+    # --- 域名唯一事实源与三态过滤（PHASE6 P1；本轮新增）---
+    # 这一组守的是**别的门禁都看不见的一类失效**：域名字符串在仓内曾**7 处各写一份**，
+    # 不一致的后果不是「看起来乱」，而是 `candidate_filter.filter_pool` 里
+    # `if not domains: keep` 把标签认不出的论文**整篇放行**（负向词与约束词一条都不生效，
+    # 且没有任何读数）。实测 1046 篇里 **141 篇**落在这一支上。
+    Gate("L18a", "域名唯一事实源：与 vault 目录双向对账 + 盘上不许出现退休名",
+         ["domains.py", "--check"]),
+    Gate("L18b", "域名唯一事实源：自检（三态解析 / 前缀碰撞 / 双向对账）",
+         ["domains.py", "--selftest"], kind="selftest"),
+    Gate("L18c", "三段式过滤器：域标签三态（仪器瞎了必须 exit 2，不许静默放行）",
+         ["candidate_filter.py", "--check"]),
+    Gate("L18d", "三段式过滤器：自检（含 141 篇那类标签的回归用例）",
+         ["candidate_filter.py", "--selftest"], kind="selftest"),
+    Gate("L18e", "域名迁移：盘上产物已全部是规范名（含派生文本产物与 bundle 改名）",
+         ["migrate_domain_labels.py", "--check"]),
+    Gate("L18f", "域名迁移：自检（判定不变 / 幂等 / 前缀碰撞）",
+         ["migrate_domain_labels.py", "--selftest"], kind="selftest"),
     Gate("L4a", "契约生成器：底本与实物一致", ["build_contracts.py", "--check"]),
     Gate("L4b", "契约作业包：批次与材料摘要一致", ["build_contract_workpack.py", "--check"]),
     # --- 契约层判据（J1–J13）---
@@ -435,9 +452,101 @@ def e2e_material_residue_gate(checker: Path | None = None) -> tuple:
     return cases, detail
 
 
+def e2e_domain_label_gates(domains_py: Path | None = None,
+                           filter_py: Path | None = None,
+                           migrate_py: Path | None = None) -> tuple:
+    """把 **L18 组**端到端跑一遍（真 CLI + 构造仓库夹具）。
+
+    为什么它必须自成一条：**L18a–L18f 接上时全是绿的**，而一条绿的判据无法自证有劲。
+    这里造「该红」的输入，逐条要求对应退出码：
+      ① 注册了一个 vault 里没有的域 ⇒ `domains --check` exit 1；
+      ② vault 里多出一个没登记的域 ⇒ exit 1（**只查一个方向挡不住这一类**）；
+      ③ vault 整个不存在 ⇒ exit **2**（没测到 ≠ 判红，也 ≠ 通过）；
+      ④ 候选池里出现退休名 ⇒ `candidate_filter --check` exit **2**（仪器瞎了）；
+      ⑤ 同一份池子 ⇒ `migrate_domain_labels --check` exit 1（并给出该跑什么命令）；
+      ⑥ 反向控制：干净夹具上三条 CLI 必须全部 exit 0。
+
+    ⚠️ 每条 CLI 都带 `P2S_REPO=<夹具>` —— 不带的话它们会去读真仓库，
+    于是「红」可能来自真仓库的别的问题（本仓库 domain 变异实测踩过：8/8 假绿）。
+    """
+    domains_py = domains_py or Path(_p("domains.py"))
+    filter_py = filter_py or Path(_p("candidate_filter.py"))
+    migrate_py = migrate_py or Path(_p("migrate_domain_labels.py"))
+    cases, detail = [], []
+
+    import shutil
+
+    def make_repo(tmp: Path, name: str, dirs: list, *, pool_retired: bool = False) -> Path:
+        repo = tmp / name
+        vault = repo / "paper2skills-vault"
+        vault.mkdir(parents=True)
+        for x in dirs:
+            (vault / x).mkdir()
+        (repo / "paper2skills-research" / "data").mkdir(parents=True)
+        groups = ["09-DataAgent"] if pool_retired else ["09-DataAgent-LLM"]
+        (repo / "paper2skills-research" / "data" / "arxiv_candidates.json").write_text(
+            json.dumps({"items": [{"arxiv_id": "x1", "title": "t", "abstract": "a",
+                                   "query_groups": groups}]}, ensure_ascii=False),
+            encoding="utf-8")
+        return repo
+
+    def cli(script: Path, repo: Path, *args):
+        env = {**os.environ, "P2S_REPO": str(repo)}
+        p = subprocess.run([sys.executable, str(script), *args],
+                           capture_output=True, text=True, env=env, timeout=300)
+        return p.returncode, ((p.stdout or "") + (p.stderr or "")).strip()
+
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td)
+        # 先知道真仓库的规范域名单（夹具要照它造）
+        rc, out = cli(domains_py, REPO, "--json")
+        canon = json.loads(out)["canonical"] if rc == 0 else []
+        if not canon:
+            return [("① 取不到规范域名单（夹具无法构造）", False)], [
+                {"case": "bootstrap", "got": rc, "head": out[:120]}]
+
+        clean = make_repo(tmp, "clean", canon + ["00-项目管理", "07-资源库"])
+        extra_reg = make_repo(tmp, "extra_reg", canon[1:] + ["00-项目管理", "07-资源库"])
+        extra_dir = make_repo(tmp, "extra_dir",
+                              canon + ["00-项目管理", "07-资源库", "99-没登记的域"])
+        no_vault = make_repo(tmp, "no_vault", canon)
+        shutil.rmtree(no_vault / "paper2skills-vault")
+        retired_pool = make_repo(tmp, "retired_pool", canon + ["00-项目管理", "07-资源库"],
+                                 pool_retired=True)
+
+        checks = [
+            ("① 注册了 vault 里没有的域 ⇒ `domains --check` exit 1", domains_py, extra_reg,
+             ("--check",), 1),
+            ("② vault 多出一个没登记的域 ⇒ exit 1（只查一个方向挡不住这类）",
+             domains_py, extra_dir, ("--check",), 1),
+            ("③ vault 整个不存在 ⇒ exit **2**（没测到 ≠ 判红 ≠ 通过）",
+             domains_py, no_vault, ("--check",), 2),
+            ("④ 池子里出现退休名 ⇒ `candidate_filter --check` exit **2**（仪器瞎了）",
+             filter_py, retired_pool, ("--check",), 2),
+            ("⑤ 同一份池子 ⇒ `migrate_domain_labels --check` exit 1（并给出该跑什么命令）",
+             migrate_py, retired_pool, ("--check",), 1),
+            ("⑥ 反向控制：干净夹具上 `domains --check` 必须 exit 0", domains_py, clean,
+             ("--check",), 0),
+            ("⑥ 反向控制：干净夹具上 `candidate_filter --check` 必须 exit 0（无基线不许误报）",
+             filter_py, clean, ("--check",), 0),
+            ("⑥ 反向控制：干净夹具上 `migrate_domain_labels --check` 必须 exit 0",
+             migrate_py, clean, ("--check",), 0),
+        ]
+        for label, script, repo, args, want in checks:
+            got, out = cli(script, repo, *args)
+            cases.append((label, got == want))
+            detail.append({"case": label, "want": want, "got": got,
+                           "head": out.splitlines()[0] if out else ""})
+    return cases, detail
+
+
 def selftest() -> int:
     """runner 自检 —— 判据，每条都能失败。"""
     cases = []
+
+    # ⓪ 端到端：域名/过滤/迁移三条 CLI 真的会红（L18 组接上时全绿）
+    dom_cases, dom_detail = e2e_domain_label_gates()
+    cases += dom_cases
 
     # ① 端到端：材料引文门禁真的会红（这是 W3 的验收原话）
     mat_cases, mat_detail = e2e_material_gate()

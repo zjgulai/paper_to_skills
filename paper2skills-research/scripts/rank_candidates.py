@@ -23,11 +23,36 @@ import json
 import re
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 CONFIG_PATH = ROOT.parent / "paper2skills-vault" / "07-资源库" / "scoring_config.json"
+
+
+
+# ---------------------------------------------------------------------------
+# 域名守卫（PHASE6 P1）：本文件用到的每个域标签都必须是**规范名**
+# ---------------------------------------------------------------------------
+# 本仓库实测过一次「同一件事 7 处各写一份名字」造成的静默失效：
+# `arxiv_harvest` 写旧名、`candidate_filter` 写新名 ⇒ 1046 篇候选里 141 篇
+# 的负向词与约束词**一条都没生效**（且没有任何读数）。此处照 `arxiv_harvest.py`
+# 的办法，在**自己这一侧** fail loud：认不出的名字当场炸，不留给下游去猜。
+# (sys.path 见下)
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+import domains as _domains  # noqa: E402
+
+
+def _assert_canonical(labels, where: str) -> None:
+    bad = sorted(set(labels) - set(_domains.CANONICAL))
+    if bad:
+        hint = {b: _domains.RETIRED[b] for b in bad if b in _domains.RETIRED}
+        raise SystemExit(
+            f"🔴 {where} 里出现非规范域名：{bad}\n"
+            + (f"   其中这些是**已退休的旧名**，规范名是：{hint}\n" if hint else "")
+            + f"   规范名以 `domains.py` 的 CANONICAL 为准（{len(_domains.CANONICAL)} 个）。")
 
 
 def load_config(path: Path = CONFIG_PATH) -> dict:
@@ -49,7 +74,18 @@ def load_config(path: Path = CONFIG_PATH) -> dict:
 
 CFG = load_config()
 DIM = CFG.get("dimensions", {})
+
+_assert_canonical(
+    CFG.get("shortlist_domain_order") or SHORTLIST_ORDER,
+    "rank_candidates 的短名单域顺序")
 THRESH = CFG.get("thresholds", {})
+
+#: 短名单的域顺序（`scoring_config.json` 可覆盖）。⚠️ 顺序 = 展示序，
+#: 但**每个名字都必须是规范名** —— 守卫在下面。
+SHORTLIST_ORDER = ["16-智能体工程", "00-电商Agent", "05-推荐系统", "13-广告分析", "02-A_B实验",
+                   "01-因果推断", "03-时间序列", "04-供应链", "06-增长模型", "07-NLP-VOC",
+                   "08-知识图谱", "09-DataAgent-LLM", "10-MAS", "14-用户分析", "15-营销投放分析",
+                   "12-ML基础", "11-AI人文"]
 
 # ---------- A. 发表层级 ----------
 TIER_A_DEFAULT = {
@@ -256,11 +292,7 @@ def main() -> None:
             ])
 
     # 短名单 markdown
-    order = CFG.get("shortlist_domain_order",
-                    ["16-智能体工程", "00-电商Agent", "05-推荐系统", "13-广告分析", "02-A_B实验",
-                     "01-因果推断", "03-时间序列", "04-供应链", "06-增长模型", "07-VOC舆情",
-                     "08-知识图谱", "09-DataAgent", "10-MAS", "14-用户分析", "15-营销投放",
-                     "12-ML基础", "11-AI人文"])
+    order = CFG.get("shortlist_domain_order", SHORTLIST_ORDER)
     lines = ["# 近三个月（2026-06-12 → 2026-09-11）候选论文短名单", "",
              f"候选总数 {len(rows)}；下表为各领域综合得分 Top 10。", ""]
     for dom in order:

@@ -381,23 +381,16 @@ def read_contracts() -> dict[str, dict]:
 # 2. 三段式检索式构造
 # ---------------------------------------------------------------------------
 def harvest_domain_of(harvest_groups: dict, domain: str) -> str | None:
-    """harvest 的域标签与 filter 的域标签**实测有 3 处不一致**（见 J8）。
+    """把 filter 侧域名映射到 harvest 侧组名。返回 None = 该域名在收割查询里没有组。
 
-    filter 认 `07-NLP-VOC` / `09-DataAgent-LLM` / `15-营销投放分析`，
-    harvest 发的是 `07-VOC舆情` / `09-DataAgent` / `15-营销投放`。
-    本函数把 filter 域名映射回 harvest 的组名 —— 映射写死并**逐条验证存在**。
+    ⚠️ **这里曾经有一张手写的桥接表**（`{"07-NLP-VOC": "07-VOC舆情", ...}`）——
+    它是域名「一处多名」的**第三份**定义（前两份在 `arxiv_harvest.QUERY_GROUPS`
+    与 `candidate_filter.DOMAIN_DIR`）。本次修复把域名收进 `domains.py` 唯一事实源、
+    并让产出端直接产规范名 ⇒ **桥接表成了死代码，已删**。
+    本函数现在只做一件事：确认这个名字**确实在收割组里**（拿不到就返回 None，
+    由调用方显式处理，不给默认值 —— 「判据只认一种字段名」的解药是 fail loud）。
     """
-    if domain in harvest_groups:
-        return domain
-    bridge = {
-        "07-NLP-VOC": "07-VOC舆情",
-        "09-DataAgent-LLM": "09-DataAgent",
-        "15-营销投放分析": "15-营销投放",
-    }
-    cand = bridge.get(domain)
-    if cand and cand in harvest_groups:
-        return cand
-    return None
+    return domain if domain in harvest_groups else None
 
 
 def terms_of(groups: list[str]) -> list[str]:
@@ -1775,17 +1768,22 @@ def run(as_json: bool = False, json_out: Path = OUT_JSON, md_out: Path = OUT_MD,
         "todo": [
             "**只生成检索式，不执行检索** —— 本任务（S4）的交付物止于「缺口 → 检索式」。"
             "真正发查询、收割、打分属下一步。",
-            "🔴 **`arxiv_harvest.py` 的域标签与 `candidate_filter.py` 有 4 处实测不一致**"
-            "（`07-VOC舆情` vs `07-NLP-VOC`、`09-DataAgent` vs `09-DataAgent-LLM`、"
-            "`15-营销投放` vs `15-营销投放分析`、`00-电商Agent` 在 filter 里**根本没有**）："
-            "实测候选池 1046 篇里 **141 篇**（89 + 37 + 9 + 6）的 `query_groups` **全都**"
-            "不在 `DOMAIN_DIR` 里，会被 `filter_pool` 的 `if not domains: keep` 分支"
-            "**整篇放行**（负向词与约束词都不生效）。"
-            "⚠️ 本数字**首次报成了 113** —— 漏算了 `00-电商Agent` 那 37 篇；"
-            "「漏算」的原因是当时只看了「filter 里有同名域」的三对，没查「filter 里压根没有的域」。"
+            "✅ **已在上游修掉（2026-09-14，PHASE6 P1）** —— 本行此前登记的是一处实测缺陷："
+            "`arxiv_harvest.py` 的域标签与 `candidate_filter.py` 不一致 4 处"
+            "（`07-VOC舆情`/`09-DataAgent`/`15-营销投放` 三个改名 + `00-电商Agent` 在 filter 里"
+            "**根本没有**），导致候选池 1046 篇里 **141 篇**（89+37+9+6）的 `query_groups` 全都"
+            "认不出来，被 `filter_pool` 的 `if not domains: keep` **整篇放行**"
+            "（负向词与约束词一条都没生效，且**没有任何读数**）。"
+            "⚠️ 该数字**首次报成了 113** —— 漏算了 `00-电商Agent` 那 37 篇；漏算的原因是"
+            "当时只看了「filter 里有同名域」的三对，没查「filter 里压根没有的域」。"
             "**这正是本仓库那条铁律的又一例**：判「某个东西不存在」之前，先问仪器能不能看见它。"
-            "本任务用 `harvest_domain_of` 在**本侧**折好这 3 对，`00-电商Agent` 不参与本次检索域，"
-            "**不动上游脚本**（纪律 6），已登录。",
+            "**P1 的处置**：域名收进 `domains.py` 唯一事实源（17 规范域，与 vault 目录双向对账）"
+            "→ 产出端 `arxiv_harvest.py` 直接产规范名并加 fail-loud 守卫 → 盘上产物一次性迁移"
+            "（`migrate_domain_labels.py`，判定逐篇不变）→ `filter_pool` 的三态改造"
+            "（**退休名现在会被判成「仪器瞎了」并 `exit 2`，不再被静默折掉**）。"
+            "读数：判定 905 → **1046**、保留 776 → **772**、静默放行 **141 → 0**"
+            "（新丢 6 篇逐篇复核均为真污染；另**救回 2 篇** —— 它们的第二个域标签此前也是隐形的）。"
+            "本任务的 `harvest_domain_of` 桥接表由此**成了死代码，已删**。",
             "**结构空白那 3 条不给检索式**（走 SOP）。已装线里与它们同名 L3 的卡为 0，"
             "因此连交叉项都取不到材 —— 这不是本脚本的缺陷，是「结构性空白」的定义。",
             "**线索评估（位次 1）有 legacy 卡为 0**，但账里 `structural_blank=false` ⇒ "
@@ -1908,8 +1906,8 @@ def run(as_json: bool = False, json_out: Path = OUT_JSON, md_out: Path = OUT_MD,
         ("J8", "产物能被 `candidate_filter.py` **直接消费**（同一个配置格式）",
          "另造一套格式 ⇒ 生成完还要人肉翻译，检索式形同废纸；"
          "或域名不在 `DOMAIN_DIR` 里 ⇒ filter **静默跳过**（保留全部 = 没过滤）",
-         "✅ 域名全在 `DOMAIN_DIR`；负向词/约束词与 filter 逐项相等（3 域走 "
-         "`harvest_domain_of` 桥接，已登记）" if not judge_errors["J8"] else "🔴"),
+         "✅ 域名全在 `DOMAIN_DIR`；负向词/约束词与 filter 逐项相等；"
+         "**域名两侧同源**（`domains.py`，桥接表已删）" if not judge_errors["J8"] else "🔴"),
         ("J9", "契约挂载点：`responsibility` / `contract_id` 与 "
          "`check_contracts.py` 键名对齐",
          "自己发明键名 ⇒ 卡产出后无处可挂；或一份没挂上却报过；"

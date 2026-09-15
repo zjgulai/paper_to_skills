@@ -132,7 +132,7 @@
 | 16.0 | — | 2608.18174 | 2026-08-17 | Seasonal false alarms in customer churn and decline early-warning systems: adjacent-window labe |
 | 12.0 | — | 2607.00473 | 2026-07-01 | How Early Is Early Enough? Design-Dependent Observation-Window Sufficiency in Subscription Chur |
 
-## 07-VOC舆情（命中 9 篇，列 Top 9）
+## 07-NLP-VOC（命中 9 篇，列 Top 9）
 
 | 分 | 会议/期刊 | arXiv | 日期 | 标题 |
 |---|---|---|---|---|
@@ -161,7 +161,7 @@
 | 43.9 | EMNLP | 2609.00479 | 2026-08-31 | EGT-KG: Evidence-Grounded Typed KG Retrieval for Practical Scientific QA with Small Language Mo |
 | 43.1 | — | 2609.00513 | 2026-09-01 | ISO-RAG: Isoperimetric Noise Control for Retrieval-Augmented Generation |
 
-## 09-DataAgent（命中 95 篇，列 Top 10）
+## 09-DataAgent-LLM（命中 95 篇，列 Top 10）
 
 | 分 | 会议/期刊 | arXiv | 日期 | 标题 |
 |---|---|---|---|---|
@@ -206,7 +206,7 @@
 | 30.0 | — | 2609.06080 | 2026-09-05 | PhenoBench: Mapping What a Deeply Phenotyped Human Cohort Can Tell Us |
 | 27.8 | — | 2609.10125 | 2026-09-09 | SA-Profile: Automated Sulcus Angle Profiling from Super-Resolution MRI |
 
-## 15-营销投放（命中 9 篇，列 Top 9）
+## 15-营销投放分析（命中 9 篇，列 Top 9）
 
 | 分 | 会议/期刊 | arXiv | 日期 | 标题 |
 |---|---|---|---|---|

@@ -11,8 +11,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 DOMAINS = ["16-智能体工程", "00-电商Agent", "05-推荐系统", "13-广告分析", "02-A_B实验",
-           "01-因果推断", "03-时间序列", "04-供应链", "06-增长模型", "07-VOC舆情",
-           "08-知识图谱", "09-DataAgent", "10-MAS", "14-用户分析", "15-营销投放",
+           "01-因果推断", "03-时间序列", "04-供应链", "06-增长模型", "07-NLP-VOC",
+           "08-知识图谱", "09-DataAgent-LLM", "10-MAS", "14-用户分析", "15-营销投放分析",
            "12-ML基础", "11-AI人文"]
 
 TOPN_PER_DOMAIN = 22
